@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="../style/default.css">
+     <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/solarized-dark.min.css" rel="stylesheet">
+</head>
+<body>
+<x-markdown>
+
+# 导航
+
+* [返回Github](https://github.com/LDQ-first/frontend)
+* [返回首页](../index.html)
+
+
+## 杂
+
+### 浏览器内核
+
+渲染引擎
+
+  - Trident内核：IE,MaxThon,TT,The World,360,搜狗浏览器等。[又称MSHTML]
+  - Gecko内核：Netscape6及以上版本，FF,MozillaSuite/SeaMonkey等
+  - Presto内核：Opera7及以上。      [Opera内核原为：Presto，现为：Blink;]
+  - Webkit内核：Safari,Chrome等。   [ Chrome的：Blink（WebKit的分支）]
+
+
+
+JS引擎
+ - Chrome V8
+ 
+
+### 请描述一下 cookies，sessionStorage 和 localStorage 的区别？
+
+- cookie是网站为了标示用户身份而储存在用户本地终端（Client Side）上的数据（通常经过加密）。
+- cookie数据始终在同源的http请求中携带（即使不需要），记会在浏览器和服务器间来回传递。
+- sessionStorage和localStorage不会自动把数据发给服务器，仅在本地保存。
+
+- 存储大小：
+  - cookie数据大小不能超过4k。
+  - sessionStorage和localStorage 虽然也有存储大小的限制，但比cookie大得多，可以达到5M或更大。
+
+- 有期时间：
+  - localStorage    存储持久数据，浏览器关闭后数据不丢失除非主动删除数据；
+  - sessionStorage  数据在当前浏览器窗口关闭后自动删除。
+  - cookie          设置的cookie过期时间之前一直有效，即使窗口或浏览器关闭
+
+
+
+### iframe有那些缺点？
+
+  - iframe会阻塞主页面的Onload事件；
+  - 搜索引擎的检索程序无法解读这种页面，不利于SEO;
+
+  - iframe和主页面共享连接池，而浏览器对相同域的连接有限制，所以会影响页面的并行加载。
+
+  - 使用iframe之前需要考虑这两个缺点。如果需要使用iframe，最好是通过javascript
+  - 动态给iframe添加src属性值，这样可以绕开以上两个问题。
+
+
+
+### 如何实现浏览器内多个标签页之间的通信?
+
+
+localStorage
+cookie
+
+server Work
+
+
+
+
+### webSocket如何兼容低浏览器？
+
+  Adobe Flash Socket 、
+  ActiveX HTMLFile (IE) 、
+  基于 multipart 编码发送 XHR 、
+  基于长轮询的 XHR
+
+
+
+### 跨域的方法
+
+
+
+
+
+
+
+
+
+
+
+
+
+</x-markdown>
+   
+    <script src="https://cdn.bootcss.com/marked/0.3.6/marked.min.js"></script>
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

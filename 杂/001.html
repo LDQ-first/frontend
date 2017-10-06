@@ -132,7 +132,7 @@ HTML字节流 转换字符流
 
 优先级：浏览器默认设置 < 用户设置 < 外部样式 < 内联样式 < HTML中的style样式
 
-特定级：id数 * 100 + 类或伪类数 * 10 + tag名称 * 1
+权重：id数 * 100 + 类或伪类数 * 10 + tag名称 * 1
 
 与dom树相结合构成渲染树
 
@@ -200,9 +200,17 @@ function jsonpCallBack (res, req) {
 
 
 
-2、跨域资源共享（CORS-Cross Origin Resource Sharing）
+2、 跨域资源共享（CORS-Cross Origin Resource Sharing）
 
 CORS，它是JSONP模式的现代升级版，与JSONP不同的是，CORS除了GET要求方法以外也支持其他的 HTTP要求。
+
+实现
+
+后端添加响应头
+
+Access-Control-Allow-Origin: （允许跨域的域名）[ * 所有域名 ]
+
+
 
 浏览器CORS请求分成两种
 a、简单请求
@@ -226,7 +234,132 @@ Content-Type：只限于三个值application/x-www-form-urlencoded、multipart/f
 满足以上两大点的即为简单请求，否则为非简单请求。
 具体请求处理的不同，大家可以去查阅下MDN HTTP访问控制(CORS) ，那里有详细的解析及用法。
 
-后端给域名添加
+
+
+
+3、document.domain+iframe（适用于主域名相同的情况）
+
+从上面的同源策略我们可以知道，浏览器这边是认为主域和子域、子域和子域，它们属于不同的域，
+那么我们如果需要让主域和子域之间可以进行通信，需要做的就是通过修改document.domain，把它们改成相同的domain
+
+在域名为 http://server.example.com 中的 a.html
+
+document.domain = 'example.com' 
+const $iframe = document.createElement('iframe') 
+$iframe.src = 'server.child.example.com/b.html' 
+$iframe.style.display = 'none' 
+document.body.appendChild($iframe) 
+$iframe.onload = () => {
+    const doc = $iframe.contentDocument || $iframe.contentWindow.document 
+    //在这里操作doc，也就是操作b.html
+    $iframe.onload = null 
+}
+
+在域名为 http://server.child.example.com 中的 b.html
+
+document.domain = 'example.com'
+
+
+这种形式方便归方便，但也有其方便带来的隐患
+
+安全性，当一个站点被攻击后，另一个站点会引起安全漏洞。
+若页面中引入多个iframe，要想操作所有iframe，domain需要全部设置成一样的。
+
+
+
+4、 window.name + iframe
+
+window 对象的name属性是一个很特别的属性，它可以在不同页面甚至不同域名加载后依旧存在。使用步骤如下：
+step1 - 首先在页面A中利用iframe加载其他域中的页面B
+step2 - 在页面B中将需要传递的数据赋给window.name
+step3 - iframe加载完成后，页面A中修改iframe地址，
+将其变成同一个域下的地址，然后获取iframe中页面B的window.name 属性
+
+
+示例代码如下：
+首先我们在域名为 http://127.0.0.1 下建立好B页面，
+在B页面的<script>标签中将需要传递的数据赋给window.name
+
+window.name = '页面B中传递给页面A的数据'
+
+然后我们域名为 http://127.0.0.1:900  的A页面,
+这里我们需要做的一件事就是利用iframe加载页面B，并将其域名进行修改，变成和页面A一样的域名。
+
+
+function proxy (url, callback) {
+    var flag = true,
+        $iframe = document.createElement('iframe'),
+        loadCallBack = function () {
+            if (flag) {
+                // 这里我们还得在域名为 http://127.0.0.1:9000 建立一个tmp.html文件当做缓存界面
+                $iframe.contentWindow.location = 'http://127.0.0.1:9000/tmp.html'
+                flag = false
+            }
+            // 修改localtion后，每次触发onload事件会重置src，相当于重新载入页面，然后继续触发onload。
+            // 这里是针对该问题做的处理
+            else {
+                callback($iframe.contentWindow.name)
+                $iframe.contentWindow.close()
+                document.body.removeChild($iframe)
+                $iframe.src = ''
+                $iframe = null
+            }
+        }
+
+    $iframe.src = url
+    $iframe.style.display = 'none'
+    // 事件绑定兼容简单处理
+    // IE 支持iframe的onload事件，不过是隐形的，需要通过attachEvent来注册
+    if ($iframe.attachEvent) {
+        $iframe.attachEvent('onload', loadCallBack)
+    }
+    else {
+        $iframe.onload = loadCallBack
+    }
+
+    document.body.appendChild($iframe)
+}
+proxy('http://127.0.0.1/bop/test.html', function(data){
+    console.log(data)
+})
+
+
+
+
+5、HTML5中的postMessage（适用于两个iframe或两个页面之间）
+
+
+postMessage隶属于html5，但是它支持IE8+和其他浏览器，可以实现同域传递，也能实现跨域传递。
+它包括发送消息postMessage和接收消息message功能。
+
+postMessage调用语法如下
+
+otherWindow.postMessage(message, targetOrigin, [transfer])
+
+
+otherWindow ： 其他窗口的一个引用，比如iframe的contentWindow属性、
+执行window.open返回的窗口对象、或者是命名过或数值索引的window.frames。
+
+message ： 将要发送到其他 window的数据，类型为string或者object。
+
+targetOrigin ： 通过窗口的origin属性来指定哪些窗口能接收到消息事件，其值可以是字符串"*"（表示无限制）或者一个URI。
+
+transfer (可选) ： 一串和message 同时传递的 Transferable 对象。
+
+
+
+接收消息message 的属性有:
+
+data ：从其他 window 中传递过来的数据。
+origin ：调用 postMessage 时消息发送方窗口的 origin 。
+source ：对发送消息的窗口对象的引用。
+
+示例如下：域名 http://127.0.0.1:9000 页面A
+通过iframe嵌入了 http://127.0.0.1 页面B，
+接下来页面A将通过postMessage对页面B进行数据传递，页面B将通过message属性接收页面A的数据
+
+
+
 
 
 
@@ -292,9 +425,9 @@ document.addEventListener("WeixinJSBridgeReady", function () {
 
 //小结
 
-//1.audio元素的autoplay属性在IOS及Android上无法使用，在PC端正常
+1.audio元素的autoplay属性在IOS及Android上无法使用，在PC端正常
 
-//2.audio元素没有设置controls时，在IOS及Android会占据空间大小，而在PC端Chrome是不会占据任何空间
+2.audio元素没有设置controls时，在IOS及Android会占据空间大小，而在PC端Chrome是不会占据任何空间
 
 
 ```

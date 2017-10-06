@@ -7,12 +7,12 @@
   * [03.前端开发工具](Introduction/03.前端开发工具.md)
 
 * [HTML](HTML)
-  * [001](HTML/001.md)
+  * [001](HTML/001.html)
 
 * [CSS](CSS)
-  * [001](CSS/001.md)
+  * [001](CSS/001.html)
 
-* [Javascript](Javascript)
+* [JavaScript](Javascript)
   * [001](Javascript/001.md)
   * [ES6&ES7](Javascript/ES6&ES7/001.md)
   * [ES8&ES9](Javascript/ES8&ES9/001.md)

@@ -15,7 +15,7 @@
   * [001](CSS/001.html)
 
 * [JavaScript](Javascript)
-  * [001](Javascript/001.md)
+  * [001](Javascript/001.html)
   * [ES6&ES7](Javascript/ES6&ES7/001.md)
   * [ES8&ES9](Javascript/ES8&ES9/001.md)
   * [TypeScript](Javascript/TypeScript/001.md)

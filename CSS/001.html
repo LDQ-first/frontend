@@ -339,6 +339,54 @@ PNG8类似GIF颜色上限为256，文件小，支持alpha透明度，无动画
 ```
 
 
+### 如果需要手动写动画，你认为最小时间间隔是多久，为什么？
+
+```
+  多数显示器默认频率是60Hz，即1秒刷新60次，所以理论上最小间隔为1/60＊1000ms ＝ 16.7ms
+
+```
+
+
+### display:inline-block 什么时候会显示间隙？(携程)
+
+```
+  移除空格、使用margin负值、使用font-size:0、letter-spacing、word-spacing
+
+```
+
+
+### overflow: scroll时不能平滑滚动的问题怎么处理？
+
+```
+
+-webkit-overflow-scrolling: touch;，是因为这行代码启用了硬件加速特性，所以滑动很流畅。
+
+实际上，Safari真的用了原生控件来实现，对于有-webkit-overflow-scrolling的网页，
+会创建一个UIScrollView，提供子layer给渲染模块使用。
+
+在WebKit 108400版本左右才支持，所以iOS Safari应该是需要5.0。
+Android则是在4.0以上支持。
+从前端开发的角度讲，
+只需要知道CSS的属性-webkit-overflow-scrolling是真的创建了带有硬件加速的系统级控件，
+所以效率很高。
+
+
+```
+
+
+### 什么是CSS 预处理器 / 后处理器？
+
+```
+
+  - 预处理器例如：LESS、Sass、Stylus，用来预编译Sass或less，增强了css代码的复用性，
+    还有层级、mixin、变量、循环、函数等，具有很方便的UI组件模块化开发能力，极大的提高工作效率。
+
+
+  - 后处理器例如：PostCSS，通常被视为在完成的样式表中根据CSS规范处理CSS，让其更有效；目前最常做的
+    是给CSS属性添加浏览器私有前缀，实现跨浏览器兼容性的问题。
+
+```
+
 
 
 ### CSS选择器优先级

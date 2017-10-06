@@ -20,22 +20,276 @@
 ## JavaScript
 
 
+### 介绍js的基本数据类型。
+
+```
+  Undefined、Null、Boolean、Number、String、
+  ECMAScript 2015 新增:Symbol(创建后独一无二且不可变的数据类型 )
+
+```
+
+### 复杂数据类型
+
+```
+Array, Object, Function
+
+```
+
+### 介绍js有哪些内置对象？
+
+```
+ Object 是 JavaScript 中所有对象的父对象
+
+ 数据封装类对象：Object、Array、Boolean、Number 和 String
+ 其他对象：Function、Arguments、Math、Date、RegExp、Error
+```
+
+
+### typeof && instanceof
+
+```
+
+
+
+
+```
+
+
+### JavaScript有几种类型的值？，你能画一下他们的内存图吗？
+
+```
+
+ 栈：原始数据类型（Undefined，Null，Boolean，Number、String）
+ 堆：引用数据类型（对象、数组和函数）
+
+ 两种类型的区别是：存储位置不同；
+ 原始数据类型直接存储在栈(stack)中的简单数据段，
+ 占据空间小、大小固定，属于被频繁使用数据，所以放入栈中存储；
+
+ 引用数据类型存储在堆(heap)中的对象,占据空间大、大小不固定。
+ 如果存储在栈中，将会影响程序运行的性能；引用数据类型在栈中存储了指针，
+ 该指针指向堆中该实体的起始地址。
+ 当解释器寻找引用值时，会首先检索其在栈中的地址，取得地址后从堆中获得实体
+
+```
+
+![001](../Img/var/001.gif)
+
+
+### null，undefined 的区别？
+
+```
+
+ null 		表示一个对象是“没有值”的值，也就是值为“空”；
+ undefined 	表示一个变量声明了没有初始化(赋值)；
+
+ undefined不是一个有效的JSON，而null是
+ undefined的类型(typeof)是undefined
+ null的类型(typeof)是object
+
+
+ Javascript将未赋值的变量默认值设为undefined；
+ Javascript从来不会将变量设为null。它是用来让程序员表明某个用var声明的变量时没有值的。
+
+ typeof undefined
+ 	//"undefined"
+ 	undefined :是一个表示"无"的原始值或者说表示"缺少值"，就是此处应该有一个值，但是还没有定义。当尝试读取时会返回 undefined；
+ 	例如变量被声明了，但没有赋值时，就等于undefined
+
+ typeof null
+ 	//"object"
+ 	null : 是一个对象(空对象, 没有任何属性和方法)；
+ 	例如作为函数的参数，表示该函数的参数不是对象；
+
+ 注意：
+ 	在验证null时，一定要使用　=== ，因为 == 无法分别 null 和　undefined
+ 	null == undefined // true
+ 	null === undefined // false
+
+ 再来一个例子：
+
+ 	null
+ 	Q：有张三这个人么？
+ 	A：有！
+ 	Q：张三有房子么？
+ 	A：没有！
+
+ 	undefined
+ 	Q：有张三这个人么？
+ 	A：有！
+ 	Q: 张三有多少岁？
+ 	A: 不知道（没有被告诉）
+
+```
+
+
+
+### 说几条写JavaScript的基本规范？
+
+```
+ 1.不要在同一行声明多个变量。
+ 2.请使用 ===/!==来比较true/false或者数值
+ 3.使用对象字面量替代new Array这种形式
+ 4.不要使用全局函数。
+ 5.Switch语句必须带有default分支
+ 6.函数不应该有时候有返回值，有时候没有返回值。
+ 7.For循环必须使用大括号
+ 8.If语句必须使用大括号
+ 9.for-in循环中的变量 应该使用var关键字明确限定作用域，从而避免作用域污染。
+
+```
+
+
+
+### Ajax 
+
+```
+
+
+
+
+```
+
+
+
+
+### 异步加载JS的方式有哪些？
+
+```
+
+(1) defer，只支持IE
+
+(2) async：
+
+(3) 创建script，插入到DOM中，加载完毕后callBack
+
+```
 
 
 
 
 
+### JavaScript 核心概念
+
+### 原型，原型链
+
+```
+
+
+```
+
+
+### this
+
+```
+
+
+```
+
+
+### 作用域链，上下文
+
+```
+
+
+```
+
+
+### 闭包
+
+```
+
+
+```
+
+
+
+### 继承
+
+
+```
+
+
+```
+
+
+### 面向对象
+
+
+```
 
 
 
 
+new 关键字做了什么
 
 
 
 
+```
+
+
+### 异步
+
+```
+
+
+```
+
+
+### CommonJS规范
+
+```
 
 
 
+```
+
+
+### AMD（Modules/Asynchronous-Definition）、CMD（Common Module Definition）规范区别？
+
+```
+
+AMD 规范在这里：https://github.com/amdjs/amdjs-api/wiki/AMD
+CMD 规范在这里：https://github.com/seajs/seajs/issues/242
+ Asynchronous Module Definition，异步模块定义，所有的模块将被异步加载，模块加载不影响后面语句运行。
+ 所有依赖某些模块的语句均放置在回调函数中。
+
+  区别：
+
+     1. 对于依赖的模块，AMD 是提前执行，CMD 是延迟执行。
+     不过 RequireJS 从 2.0 开始，也改成可以延迟执行（根据写法不同，处理方式不同）。
+     CMD 推崇 as lazy as possible.
+     2. CMD 推崇依赖就近，AMD 推崇依赖前置。看代码：
+
+ // CMD
+ define(function(require, exports, module) {
+     var a = require('./a')
+     a.doSomething()
+     // 此处略去 100 行
+     var b = require('./b') // 依赖可以就近书写
+     b.doSomething()
+     // ...
+ })
+
+ // AMD 默认推荐
+ define(['./a', './b'], function(a, b) { // 依赖必须一开始就写好
+     a.doSomething()
+     // 此处略去 100 行
+     b.doSomething()
+     // ...
+ })
+
+```
+
+
+### requireJS的核心原理是什么？（如何动态加载的？如何避免多次加载的？如何 缓存的？）
+
+```
+
+ 参考：http://annn.me/how-to-realize-cmd-loader/
+
+```
 
 
 

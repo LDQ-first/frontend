@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>Document</title>
      <link rel="stylesheet" href="../style/default.css">
-     <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/solarized-dark.min.css" rel="stylesheet">
+     <link href="https://cdn.bootcss.com/highlight.js/9.11.0/styles/monokai-sublime.min.css" rel="stylesheet">
 </head>
 <body>
 <x-markdown>
@@ -103,7 +103,7 @@
 ```
 
 
-![001](../img/url/001.png)
+![001](../Img/url/001.png)
 
 
 
@@ -145,24 +145,97 @@ HTML字节流 转换字符流
 
 
 
-
-
-
-
-
 文档加载完成的事件是DOMContentLoad这个事件是HTML文档解析完成的事件。
 而onload事件是HTML里面的外部资源等下载完成的事件。
 
 
-
-
-![001](../img/webkitflow.png)
+![001](../Img/webkitflow.png)
 
 
 
 
 
 ### 跨域的方法
+
+
+- 起因
+
+```
+
+由于JavaScript对安全访问因素的考虑，是不允许js跨域调用其他页面的内容
+
+同源策略具体分为以下几类：
+
+不同域名
+
+相同域名不同端口号，如https://www.oschina.net:8000和https://www.oschina.net:8001  
+同一个域名不同协议，如http://www.oschina.net/和https://www.oschina.net/  
+域名和域名对应的的IP，如http://b.qq.com/和 http://10.198.7.85  
+主域和子域，如http://www.oschina.net/和https://test.oschina.net  
+子域和子域，如https://test1.oschina.net和https://test2.oschina.net  
+
+```
+
+
+- 解决 
+
+```
+1、 jsonp
+支持 get方法
+不支持 post方法
+
+原理：
+
+后端返回数据时封装一层函数  
+前端接受时用该函数将数据当成script一样解析
+因为script标签不受跨域限制，所以可以跨域
+
+<script>
+function jsonpCallBack (res, req) {
+  console.log(res, req);
+}
+</script>
+< script type="text/JavaScript" src="http://localhost/test/jsonp.php?callback=jsonpCallBack&data=getJsonpData" >< /script >
+
+
+
+
+2、跨域资源共享（CORS-Cross Origin Resource Sharing）
+
+CORS，它是JSONP模式的现代升级版，与JSONP不同的是，CORS除了GET要求方法以外也支持其他的 HTTP要求。
+
+浏览器CORS请求分成两种
+a、简单请求
+b、协商模型/预检请求（Preflighted Request），即非简单请求
+
+如何区分请求具体属于哪一种呢，下面我总结了几点：
+1) 请求方式
+
+GET
+HEAD
+POST
+2）HTTP的头信息子段
+
+Accept
+Accept-Language
+Content-Language
+Last-Event-ID
+Content-Type：只限于三个值application/x-www-form-urlencoded、multipart/form-data、text/plain，
+其中'text/plain'默认支持，其他两种则需要预检请求和服务器协商。
+
+满足以上两大点的即为简单请求，否则为非简单请求。
+具体请求处理的不同，大家可以去查阅下MDN HTTP访问控制(CORS) ，那里有详细的解析及用法。
+
+后端给域名添加
+
+
+
+
+```
+
+
+
+
 
 
 

@@ -14,3 +14,10 @@ Array.prototype.forEach.call(items, function (item) {
 })
 
 
+var goToTop =  (function() {
+    var top = document.createElement('a')
+    top.href = '#'
+    top.innerText = 'Top'
+    top.classList.add('goToTop')
+    document.body.appendChild(top)
+})()

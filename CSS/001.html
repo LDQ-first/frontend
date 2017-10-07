@@ -92,6 +92,21 @@ box-sizing: content-box
 
 ```
 
+### 宽高如何确定
+
+```
+1. 内联元素
+    占地宽：内容、padding、margin
+    占地高：line height、font size
+2. block 元素
+    内容区宽：爸爸的内容区域的宽度 - 自己的左右边框 - 自己的左右 margin   2. 可以通过 white-space 控制是否换行
+    内容高度：它内部文档流中元素的高度的总和
+3. inline-block 元素
+   宽：1. 可以设置 width 2. 内容决定宽度 3. 可以通过 white-space 控制是否换行
+   高：line height、font size  它内部文档流中元素的高度的总和
+
+```
+
 
 ### 居中
 
@@ -99,14 +114,15 @@ box-sizing: content-box
 
 ```
 
-block元素：margin: 0 auto;
-
-inline元素: 父级 text-align: center;
+block元素：
+  固定宽度  margin: 0 auto;
+  不固定宽度 margin: 0 100px;
+inline, inline-block元素: 父级 text-align: center;
 
 
 position: absolute;
 left: 50%;
-transform: translateY(-50%);
+transform: translateX(-50%);
 
 
 父级 
@@ -128,7 +144,26 @@ justify-content: center;
 
 ```
 
+block元素：
+  父级
+    padding：10px 0
 
+
+inline元素：
+   父级
+     line-height
+     padding：10px 0
+     line-height，padding：10px 0
+
+
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+
+
+父级
+display: flex;
+align-items: center;
 
 
 
@@ -141,14 +176,17 @@ justify-content: center;
 
 ```
 
+一栏，两栏，三栏
 
+IE: float
 
-
-
-
-
+非IE: flex
 
 ```
+
+[更多三栏布局方案](./layout.html)
+
+
 
 
 ### 什么是外边距合并？

@@ -549,7 +549,42 @@ function* gen() {
     yield fn()
 }
 
+
+generator yield
+
+a generator is a special routine that can be used to control the iteration behaviour of a loop. 
+-- 维基百科
+
+
+迭代器
+
+co => promise 处理generator
+
+
+
 mutationObserver
+
+
+rxjs
+
+
+
+
+
+死循环
+
+var t = true;
+
+window.setTimeout(function (){
+    t = false;
+},1000);
+
+while (t){}
+
+alert('end');
+
+
+
 
 
 
@@ -582,6 +617,51 @@ microtasks: process.nextTick, Promises, Object.observe, MutationObserver
 
 
 
+async + await ==> generator + 自动执行器 ==> Promise + 语法转换 
+
+
+
+MutationObserver
+变化观察者
+
+MutationObserver给开发者们提供了一种能在某个范围内的DOM树发生变化时作出适当反应的能力.
+该API设计用来替换掉在DOM3事件
+
+
+// Firefox和Chrome早期版本中带有前缀
+var MutationObserver = window.MutationObserver 
+|| window.WebKitMutationObserver 
+|| window.MozMutationObserver
+
+// 选择目标节点
+var target = document.querySelector('#some-id');
+ 
+// 创建观察者对象
+var observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    console.log(mutation.type);
+  });    
+});
+ 
+// 配置观察选项:
+var config = { 
+    attributes: true, 
+    childList: true, 
+    characterData: true 
+}
+ 
+// 传入目标节点和观察选项
+observer.observe(target, config);
+ 
+// 随后,你还可以停止观察
+observer.disconnect();
+
+
+
+
+
+
+
 
 
 
@@ -593,6 +673,10 @@ microtasks: process.nextTick, Promises, Object.observe, MutationObserver
 [参考1](http://www.jianshu.com/p/12b9f73c5a4f#)  
 [参考2](http://www.jianshu.com/p/3ed992529cfc)  
 [参考3](https://segmentfault.com/a/1190000008866165)  
+[参考4]( https://en.wikipedia.org/wiki/Generator_ )  (computer_programming)  
+[参考5](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver)  
+[参考6](https://www.zhihu.com/question/55364497)  
+
 
 
 
@@ -605,9 +689,28 @@ microtasks: process.nextTick, Promises, Object.observe, MutationObserver
 ![003](../Img/async/003.jpg)
 
 
+输出   
+y == undefined  
+z == undefined  
+
+![006](../Img/async/006.jpg)
+
+输出  
+y == 1  
+z == 2  
+
+![008](../Img/async/008.jpg)
 
 
+输出  
+task0  
+task1  
+0秒  
+1秒  
+2秒 
 
+
+![010](../Img/async/010.jpg)
 
 
 

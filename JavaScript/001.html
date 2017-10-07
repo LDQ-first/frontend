@@ -332,6 +332,161 @@ while(i!=1){
 
 ```
 
+Ajax的优点
+
+1. 无刷新更新数据。
+
+2. 异步与服务器通信。
+
+3. 前端和后端负载平衡。
+
+4. 基于标准被广泛支持。
+
+5. 界面与应用分离。
+
+
+Ajax缺点
+
+1. AjAX干掉了Back和加入收藏书签功能，即对浏览器机制的破坏。
+
+2. AJAX的安全问题。
+诸如跨站点脚步攻击、SQL注入攻击和基于Credentials的安全漏洞等等
+
+3. 因为网络延迟需要给用户提供必要提示
+
+
+
+readyState状态值意义： 
+
+0：请求没有发出（在调用 open() 之前）。 
+1：请求已经建立但还没有发出（调用 send() 之前）。 
+2：请求已经发出正在处理之中（这里通常可以从响应得到内容头部）。 
+3：请求已经处理，响应中通常有部分数据可用，但是服务器还没有完成响应。 
+4：响应已完成，可以访问服务器响应并使用它。
+
+
+
+
+封装原生Ajax
+
+const name = 'name'
+
+ajax({
+    url: 'http://getData',
+    type: 'get',
+    data: {
+        name: name
+    },
+    success: (name) => {
+        dealWithName(name)
+    },
+    error: () => {
+        err()
+    }
+})
+
+const dealWithName = (name) => {
+    console.log(name)
+}
+
+const err = () => {
+    console.log('err')
+}
+
+
+const ajax = (obj) => {
+    const xhr = new XMLHttpRequest()
+    let dataStr = ''
+    for(let key in obj.data) {
+        dataStr += `${key}=${obj.data[key]}&` 
+    }
+    dataStr = dataStr.substr(0, dataStr.length - 1)
+
+    xhr.onreadystatechange = () => {
+        if(xhr.readyState === 4 && xhr.status === 200) {
+            const resContent =  JSON.parse(xhr.responseText)
+            obj.success(resContent)
+        }
+        if(xhr.readyState === 4 && xhr.status === 404) {
+            const resContent =  JSON.parse(xhr.responseText)
+            obj.error()
+        }
+        if(obj.type.toLowerCase() === 'get') {
+            xhr.open(obj.type, `${obj.url}?${dataStr}`, true)
+            xhr.send()
+        }
+
+        if(obj.type.toLowerCase() === 'post') {
+            xhr.open(obj.type, obj.url, true)
+            xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded")
+            xhr.send(dataStr)
+        }
+
+    } 
+}
+
+
+
+
+```
+
+
+### Fetch
+
+```
+
+Fetch 是浏览器提供的原生 AJAX 接口。
+使用 window.fetch 函数可以代替以前的 $.ajax、$.get 和 $.post。
+
+
+fetch('/').then((response) => {
+    response.text().then((text) => {
+        console.log(text)
+    })
+})
+
+
+Fetch API 就是浏览器提供的用来代替 jQuery.ajax 的工具
+
+
+
+Fetch API 提供的一组对象
+
+window.fetch 函数只是 Fetch API 提供的众多接口中的一个，还有很多有用的对象：
+
+window.Headers
+
+window.Response
+
+window.Request
+
+……
+
+
+Fetch API 的特点
+
+基于 Promise（如果你没有学过 Promise，强烈建议你学一学）
+不需要依赖第三方库，就可以优雅地使用 AJAX
+Fetch API 的问题
+
+使用 fetch 无法取消一个请求。
+这是因为 Fetch API 基于 Promise，
+而 Promise 无法做到这一点。
+不过相信很快就会有对策。
+
+
+
+
+
+兼容性
+
+有的浏览器没有 Fetch API，没有关系，只要引入一个 polyfill 就可以了：
+
+GitHub - github/fetch: A window.fetch JavaScript polyfill.
+
+http://link.zhihu.com/?target=https%3A//github.com/github/fetch
+
+
 
 
 
@@ -415,6 +570,9 @@ true
 ### 闭包
 
 ```
+
+
+
 
 
 ```
@@ -519,6 +677,12 @@ new 的过程
 
 new后面的对象.prototype 上有个 constructor 属性
 指向new后面的对象
+
+
+
+设计模式
+
+
 
 
 ```

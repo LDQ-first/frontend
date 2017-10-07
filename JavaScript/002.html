@@ -168,6 +168,9 @@ JSON.parse('{"a": 10, "b": 20}')
 
 ```
 
+
+
+
 ### 异步
 
 ```
@@ -185,6 +188,153 @@ function* gen() {
     yield fn()
 }
 
+generator yield
+
+
+mutationObserver
+
+
+rxjs
+
+
+
+```
+
+
+### Promise
+
+
+```
+
+
+Promise 对象用于一个异步操作的最终完成（或失败）及其结果值的表示。
+(
+    简单点说就是处理异步请求。
+    我们经常会做些承诺，
+    如果我赢了你就嫁给我，
+    如果输了我就嫁给你之类的诺言。
+    这就是promise的中文含义。
+    一个诺言，一个成功，一个失败。
+)
+
+
+API
+
+Promise.all(iterable)
+Promise.prototype.catch(onRejected)
+Promise.prototype.then(onFulfilled, onRejected)
+Promise.race(iterable)
+Promise.reject(reason)
+Promise.resolve(value)
+
+
+
+Promise 有几种状态
+
+- pending: 初始状态
+- fulfilled: 成功
+- rejected: 失败
+
+属性
+
+Promise.length
+长度属性，其值总是为 1 (构造器参数的数目).
+
+Promise.prototype
+表示 Promise 构造器的原型.
+
+pending 状态的 Promise 对象可能触发fulfilled 状态并传递一个值给相应的状态处理方法，
+也可能触发失败状态（rejected）并传递失败信息。
+当其中任一种情况出现时，Promise 对象的 then 方法绑定的处理方法（handlers ）就会被调用
+（then方法包含两个参数：onfulfilled 和 onrejected，它们都是 Function 类型。
+当Promise状态为fulfilled时，调用 then 的 onfulfilled 方法，
+当Promise状态为rejected时，调用 then 的 onrejected 方法， 
+所以在异步操作的完成和绑定处理方法之间不存在竞争）。
+
+then
+能处理成功和失败
+
+catch
+处理失败
+
+
+
+
+
+Promise.all(iterable)
+
+Promise.prototype.catch(onRejected)
+
+Promise.prototype.then(onFulfilled, onRejected)
+
+Promise.race(iterable)
+
+Promise.reject(reason)
+
+Promise.resolve(value)
+
+
+
+
+
+
+
+
+
+
+例子
+
+const fs = require('fs')
+const markdown = require('markdown').markdown
+
+
+
+readFile(markdown)
+        .then( mdStr => {
+            return markdown.toHTML(mdStr)
+        })
+        .then( html => {
+            writeFile('b.html', html)
+        }).catch( err => {
+            console.log(err)
+        })
+
+
+
+const readFile = url => {
+    const promise = new Promise(( resolve, reject ) => {
+        fs.readFile(url, 'utf-8', (err, str) => {
+            if (err) {
+                reject(new Error('readFile error'))
+            } else {
+                resolve(str)
+            }
+        })
+    })
+    return promise
+}
+
+
+const writeFile = (url, data ) => {
+    const promise = new Promise((resolve, reject ) => {
+        fs.writeFile( url, data, ( err, str) => {
+            if(err) {
+                reject(new Error('writeFile error'))
+            } else {
+                resolve()
+            }
+        })
+    })
+
+    return promise
+}
+
+
+
+
+
+
+
 
 
 
@@ -193,13 +343,11 @@ function* gen() {
 ```
 
 
+[参考1](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
 
 
-
-
-
-
+![promises](../Img/promise/promises.png)
 
 
 

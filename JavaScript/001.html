@@ -410,19 +410,65 @@ const ajax = (obj) => {
         if(xhr.readyState === 4 && xhr.status === 404) {
             const resContent =  JSON.parse(xhr.responseText)
             obj.error()
+        } 
+    } 
+
+    if(obj.type.toLowerCase() === 'get') {
+        xhr.open(obj.type, `${obj.url}?${dataStr}`, true)
+        xhr.send()
+    }
+
+    if(obj.type.toLowerCase() === 'post') {
+        xhr.open(obj.type, obj.url, true)
+        xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded")
+        xhr.send(dataStr)
+    }
+}
+
+
+
+
+promise式封装
+
+fetch({
+    url: 'http://getData',
+    type: 'get',
+    data: {
+        name: name
+    }
+}).then(res => {
+    console.log(res)
+}).catch(err => {
+    console.log(err)
+}) 
+
+
+
+const fetch = ( obj ) => {
+    return new Promise((resolve, reject) => {
+        let dataStr = ''
+        for(let key in obj.data) {
+            dataStr += `${key}=${obj.data[key]}&` 
         }
-        if(obj.type.toLowerCase() === 'get') {
-            xhr.open(obj.type, `${obj.url}?${dataStr}`, true)
-            xhr.send()
-        }
+        dataStr = dataStr.substr(0, dataStr.length - 1)
 
         if(obj.type.toLowerCase() === 'post') {
             xhr.open(obj.type, obj.url, true)
             xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded")
-            xhr.send(dataStr)
+            xhr.send(obj.data)
+        } else if(obj.type.toLowerCase() === 'get') {
+            xhr.open(obj.type, `${obj.url}?${dataStr}`, true)
+            xhr.send()
         }
-
-    } 
+        
+        xhr.onload = () => {
+            resolve(JSON.parse(xhr.responseText))
+        }
+        xhr.error = () => {
+            reject()
+        }
+    })
+    
 }
 
 
@@ -467,8 +513,8 @@ Fetch API 的特点
 
 基于 Promise（如果你没有学过 Promise，强烈建议你学一学）
 不需要依赖第三方库，就可以优雅地使用 AJAX
-Fetch API 的问题
 
+Fetch API 的问题
 使用 fetch 无法取消一个请求。
 这是因为 Fetch API 基于 Promise，
 而 Promise 无法做到这一点。
@@ -586,13 +632,6 @@ true
 
 Object.create
 class
-
-
-function inherit(superType, subType){
-    var _prototype  = Object.create(superType.prototype)
-    _prototype.constructor = subType
-    subType.prototype = _prototype
-}
 
 
 

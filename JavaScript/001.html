@@ -555,15 +555,30 @@ mutationObserver
 
 异步有两种事件队列
 
-microtask
+microtask  [当前js执行loop的尾部]
 
-macrotask
+macrotask  [下个js执行loop的首部]
+
+js执行
+
+一行一行执行
+
+sync  [1, 2, 3, 4] 
+
+async [microtask] [macrotask]
+
+所有 sync 执行完
+再执行 async 
+所有 [microtask] 执行完
+再执行 [macrotask] 
 
 
 
+MicroTask和macroTask的api范畴
 
+macrotasks: setTimeout, setInterval, setImmediate, I/O, UI rendering
 
-
+microtasks: process.nextTick, Promises, Object.observe, MutationObserver
 
 
 
@@ -572,16 +587,22 @@ macrotask
 
 ```
 
-[参考1](http://www.jianshu.com/p/12b9f73c5a4f#)
-[参考2](http://www.jianshu.com/p/3ed992529cfc)
-[参考3](https://segmentfault.com/a/1190000008866165)
+
+
+[参考0](http://stackoverflow.com/questions/25915634/difference-between-microtask-and-macrotask-within-an-event-loop-context)  
+[参考1](http://www.jianshu.com/p/12b9f73c5a4f#)  
+[参考2](http://www.jianshu.com/p/3ed992529cfc)  
+[参考3](https://segmentfault.com/a/1190000008866165)  
 
 
 
-
-
+输出  3 1 5 4  
 
 ![001](../Img/async/001.jpg)
+
+输出 start 1 2 end
+
+![003](../Img/async/003.jpg)
 
 
 

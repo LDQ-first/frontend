@@ -48,11 +48,71 @@ Array, Object, Function
 ### typeof && instanceof
 
 ```
+typeof
+
+typeof 0
+"number"
+
+typeof '0'
+"string"
+
+typeof undefined
+"undefined"
+
+typeof null
+"object"
+
+typeof {}
+"object"
+
+typeof []
+"object"
+
+typeof function () {}
+"function"
+
+typeof Symbol()
+"symbol"
+
+
+
+
+instanceof
+
+
 
 
 
 
 ```
+
+
+![001](../Img/type/001.jpg)
+
+
+### 类型识别
+
+```
+typeof
+   typeof可以识别标准类型null除外
+   typeof不能识别具体的对象类型除了function外
+ 
+ Object.prototype.toString
+   Object.prototype.toString可以识别出标准类型以及所有的内置对象类型
+   Object.prototype.toString不能识别自定义对象
+
+ constructor
+   constructor可以识别标准类型（undefined、null除外因为没有构造器）
+   constructor可以识别内置对象类型
+   constructor可以识别自定义对象类型
+
+ instanceof
+    instanceof 可以判别内置对象
+    instanceof 不能判别基本类型
+    instanceof 可以判别自定义对象
+```
+
+
 
 
 ### JavaScript有几种类型的值？，你能画一下他们的内存图吗？
@@ -74,6 +134,91 @@ Array, Object, Function
 ```
 
 ![001](../Img/var/001.gif)
+
+
+
+###  document.write 作用
+
+```
+
+当你打开一个页面，浏览器会
+
+1 调用 document.open() 打开文档
+2 document.write(...) 将下载到的网页内容写入文档
+3 所有内容写完了，就调用 document.close()
+4 触发 dom ready 事件（DOMContentReady)
+
+所以你如果在第3步之前 document.write(1) 那么你就直接追加内容到当前位置，
+如果你在第3步之后 document.write()，那么由于 document 已经 close 了，
+所以必须重新 document.open() 来打开文档，这一打开，内容就被清空了。
+
+
+```
+
+
+### 为什么 0.1 + 0.2 结果为 0.30000000000000004
+
+```
+
+0.1 + 0.2
+0.30000000000000004
+
+
+需要有以下基础知识：
+
+计算机将所有数据以二进制的形式存储
+计算机用有限的大小来存储数据（因为现实生活中不存在无限大的内存或硬盘）
+
+好的，然后结合我们的问题来看。
+
+
+计算机如何存储 0.1 和 0.2？
+
+十进制的 0.1 转为二进制，得到一个无限循环小数：0.00011…。
+
+也就是说，二进制无法「用有限的位数」来表示 0.1。对于 0.2 也是一样的，不赘述。
+二进制能「用有限的位数」表示的有：0.5、0.25、0.125 等。
+
+但是计算机只能用有限的位数来存一个数，所以最终，计算机存的数是一个近似于 0.1 的小数。
+
+确切的二进制值是0-01111111011-1001100110011001100110011001100110011001100110011010，
+对应的十进制值是0.10000000000000000555...。
+
+
+这是计算机能表示的最接近 0.1 的数字（存储一个数字的空间越大则越精确）。
+（具体转换过程参考 https://segmentfault.com/a/1190000005022170 ）
+
+所以当我们计算 0.1 + 0.2 时，实际上算的是两个近似值相加，得到的值当然也是近似等于 0.3。
+
+总结
+
+问题的根源是十进制小数转为二进制小数的过程中，会损失精度
+你在写代码的过程中，遇到小数都要小心，比如下面的代码会造成死循环
+
+var i = 0.1
+while(i!=1){
+    console.log(i)
+    i += 0.1
+}
+
+因为 i 加 9 次 0.1，得到的值是 1 的近似值，并不是 1。
+你应该对计算机存储方式有一定的了解。
+
+
+```
+
+
+
+![进制](../Img/二进制/001.png)
+
+
+
+
+
+
+
+
+
 
 
 ### null，undefined 的区别？

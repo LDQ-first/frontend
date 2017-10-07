@@ -2,7 +2,7 @@ var items = document.querySelectorAll('x-markdown')
 /*console.log(items)*/
 
 marked.setOptions({
-    sanitize: true,
+    /*sanitize: true,*/
     highlight: function (code) {
         return hljs.highlightAuto(code).value
     }

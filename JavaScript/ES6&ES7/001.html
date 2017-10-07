@@ -114,7 +114,122 @@
 
 ```
 
+
+Symbol 可以创建一个独一无二的值（但并不是字符串）
+
+var race = {
+  protoss: Symbol(),
+  terran: Symbol(),
+  zerg: Symbol()
+}
+
+race.protoss !== race.terran // true
+race.protoss !== race.zerg // true
+
+
+可以给每个 Symbol 起一个名字
+
+var race = {
+  protoss: Symbol('protoss'),
+  terran: Symbol('terran'),
+  zerg: Symbol('zerg')
+}
+
+不过这个名字跟 Symbol 的值并没有关系，你可以认为这个名字就是个注释。
+如下代码可以证明 Symbol 的名字与值无关：
+
+var a1 = Symbol('a')
+var a2 = Symbol('a')
+a1 !== a2 // true
+
+
+第一个作用是作为属性名避免属性名冲突，
+
+第二个作用是替代代码中多次使用的字符串（例如：abc），
+多次使用的字符串在代码中不易维护，
+而这时候定义一个对象的属性（属性名用Symbol格式），值为abc，
+就可以作为全局变量来使用了。
+
+第三个，由于以Symbol值作为名称的属性，不会被常规方法遍历得到。
+我们可以利用这个特性，为对象定义一些非私有的、但又希望只用于内部的方法。
+
+第四个，这个有时，我们希望重新使用同一个Symbol值，Symbol.for方法可以做到这一点。
+它接受一个字符串作为参数，然后搜索有没有以该参数作为名称的Symbol值。
+如果有，就返回这个Symbol值，否则就新建并返回一个以该字符串为名称的Symbol值。
+
+
+
 ```
+
+
+- Proxy 对象
+
+```
+window.Proxy 
+
+假设我们有一个数据（对象）data，内容为
+
+var data = {
+  username: 'Frank',
+  age: 26
+}
+
+现在我们给 data 创建一个代理 proxy
+
+var proxy = new Proxy(
+    data, 
+    {
+        set: function(){...},
+        get: function(){...} 
+    }
+)
+
+那么，「proxy 就全权代理 data 了」，这话是什么意思呢？
+
+意思就是 data 放假去了，
+如果你有任何事情要找 data，直接找 proxy 就好了，
+proxy 现在是 data 的秘书、代理人。
+
+比如原本你如果要改 username，那么应该写 data.username = 'frank'；
+
+那么现在你只需要写 proxy.username = 'frank' 就好了。
+
+原本你如果想写 console.log(data.username)，
+现在也只需要 console.log(proxy.username) 就可以了。
+
+这样做什么意义？
+
+
+proxy.username = 'frank' 这句话实际上会运行 set 方法。
+set 方法可以对传入的值进行监控和过滤。
+
+假设 PM 要求「username 前后不能含有空格」，
+用 Proxy 就很好实现这一需求，只需要把 set 写成这样：
+
+set: function(obj, prop, value){
+  obj[prop] = value.trim()
+}
+
+
+再假设 PM 要求「统计 username 被读取的次数」，
+那么我们只需要把 get 写成这样：
+
+get: function(obj, prop){
+  if(prop === 'username'){
+    count += 1
+  }
+  return obj[prop]
+}
+
+
+双向绑定
+
+既然用 Proxy 能监控一个变量的读写情况，那么我们就很容易实现一个双向绑定了。
+
+```
+
+具体代码看[这里](http://jsbin.com/qotutiwivo/1/edit?html,js,output)
+
 
 
 - Set && Map 

@@ -182,9 +182,57 @@ IE: float
 
 非IE: flex
 
+
+三栏 中间自适应
+
+1. float
+  左 float left
+
+  中间写在最后
+
+  右 float right
+
+
+2. position
+   子元素
+   position absolute
+
+   左
+   left 0
+
+   中间
+   left: 100px;
+   right: 100px;
+
+   右
+   right 0
+
+
+3. flexbox
+   
+   父级 dispaly: flex;
+   自己 flex: 1;
+
+
+4. table
+
+  父级
+  display: table
+  
+  子元素
+  display: table-cell
+
+
+5 grid
+  
+  父级
+  display: grid
+  grid-template-rows: 100px
+  grid-template-column: 300px auto 300px
+
 ```
 
-[更多三栏布局方案](./layout.html)
+[更多三栏布局方案细节](./layout.html)
 
 
 

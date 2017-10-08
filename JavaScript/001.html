@@ -1320,6 +1320,48 @@ fn(1,2,3) => fn(1)(2)(3)
 ### CommonJS规范
 
 ```
+nodejs 模块化规范
+前端开发依赖大量的库和插件，都可以从npm中获取
+构件工具使用 npm 包方便高效
+同步一次性加载
+
+
+(function(exports, require, module, __filename, __dirname) {
+
+})
+
+
+导入模块
+
+require('xxx')
+
+
+导出模块
+
+module.exports = {
+
+}
+
+
+
+
+
+exports 和 module.exports 区别
+
+在node源码中
+exports = module.exports
+
+是 module.exports的快捷方式
+
+exports.xxx = xxx
+
+
+
+但 exports = {
+    xxx
+}
+
+就改写了 exports 的指向,就不再是 module.exports 的快捷方式
 
 
 
@@ -1334,7 +1376,7 @@ AMD 规范在这里：https://github.com/amdjs/amdjs-api/wiki/AMD
 CMD 规范在这里：https://github.com/seajs/seajs/issues/242
  Asynchronous Module Definition，异步模块定义，所有的模块将被异步加载，模块加载不影响后面语句运行。
  所有依赖某些模块的语句均放置在回调函数中。
-
+  
   区别：
 
      1. 对于依赖的模块，AMD 是提前执行，CMD 是延迟执行。
@@ -1360,6 +1402,8 @@ CMD 规范在这里：https://github.com/seajs/seajs/issues/242
      // ...
  })
 
+ 
+
 ```
 
 
@@ -1370,6 +1414,8 @@ CMD 规范在这里：https://github.com/seajs/seajs/issues/242
  参考：http://annn.me/how-to-realize-cmd-loader/
 
 ```
+
+
 
 
 

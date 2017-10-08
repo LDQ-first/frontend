@@ -65,10 +65,6 @@ Array.prototype.slice.call(document.querySelectorAll("div"));
 Array.prototype.slice.call(arguments);
 
 
-
-
-
-
 ```
 
 
@@ -92,6 +88,40 @@ function forEach(obj, fn) {
 
 
 ```
+
+
+
+### 写个数组求和函数
+
+```
+var arr = [3, 4, 5, 6, 10]
+
+Array.prototype.sum = function (){
+  return this.reduce(function (pre, value) {
+    return pre + value
+  })
+}
+
+arr.sum()
+// 28
+
+```
+
+
+
+### 找出长度最长的数组元素。
+
+```
+function findLongest(arr) {
+  return arr.reduce(function (pre, next) {
+    return next.length > pre.length ? next : pre
+  }, '')
+}
+
+findLongest(['aaa', 'bb', 'c']) // "aaa"
+
+```
+
 
 
 

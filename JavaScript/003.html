@@ -78,9 +78,53 @@
 ### Promise操作
 
 ```
-- 读文件
+- 读写文件
+
+const fs = require('fs')
+const markdown = require('markdown').markdown
 
 
+
+readFile(markdown)
+        .then( mdStr => {
+            return markdown.toHTML(mdStr)
+        })
+        .then( html => {
+            writeFile('b.html', html)
+        }).catch( err => {
+            console.log(err)
+        })
+
+
+
+
+const readFile = url => {
+    const promise = new Promise(( resolve, reject ) => {
+        fs.readFile(url, 'utf-8', (err, str) => {
+            if (err) {
+                reject(new Error('readFile error'))
+            } else {
+                resolve(str)
+            }
+        })
+    })
+    return promise
+}
+
+
+const writeFile = (url, data ) => {
+    const promise = new Promise((resolve, reject ) => {
+        fs.writeFile( url, data, ( err, str) => {
+            if(err) {
+                reject(new Error('writeFile error'))
+            } else {
+                resolve()
+            }
+        })
+    })
+
+    return promise
+}
 
 
 

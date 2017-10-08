@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../style/default.css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+</head>
+<body>
+<x-markdown>
+
+# 导航
+
+* [返回Github](https://github.com/LDQ-first/frontend)
+* [返回首页](../index.html)
+
+
+
+## 性能优化
+
+
+
+```
+
+优化的目的可以是：
+
+1. 增强用户体验。但是这样说很虚，具体来说可以是：
+
+1.1. 加快页面展示速度（慢）
+
+1.2. 加快页面运行速度（卡）
+
+2. 节约服务器带宽流量 (省钱)
+
+3. 减少服务器压力
+
+
+- 其次，在没有找到性能瓶颈之前，不要优化！
+
+在没有找到性能瓶颈之前，不要优化！
+
+一个网页的性能到底跟哪几方面有关？你优化的地方属于哪一方面？这是需要首先搞清楚的。
+
+一个网页的大概流程包括：
+
+DNS 查询
+发送请求
+等待服务器响应
+下载服务器响应内容
+解析 HTML、CSS、JS 等
+渲染 HTML、CSS、JS 和图片等
+响应用户的点击事件等
+如果你的性能瓶颈在「等待服务器响应」这一步，那么你怎么优化 JS、CSS 都没用。
+
+所以再说一遍：在没有找到性能瓶颈之前，不要优化！
+
+
+
+
+- 怎么优化？
+
+等你找到了瓶颈所在，就可以「对症下药」了。
+
+
+DNS 查询 —— 减少网页所用的域名个数，可可以减少 DNS 查询的时间
+
+DNS预解析
+
+典型的一次DNS解析需要耗费 20-120 毫秒左右，
+减少DNS解析时间和次数是个很好的优化方式。
+
+
+< meta http-equiv="x-dns-prefetch-control" content="on" >
+< link rel="dns-prefetch" href="//www.zhix.net" >
+< link rel="dns-prefetch" href="//api.share.zhix.net" >
+< link rel="dns-prefetch" href="//bdimg.share.zhix.net" >
+
+
+如果需要禁止隐式的 DNS Prefetch，可以使用以下的标签：
+< meta http-equiv="x-dns-prefetch-control" content="off" >
+
+注：dns-prefetch需慎用，多页面重复DNS预解析会增加重复DNS查询次数。
+
+
+域名拆分是优化资源下载速度一步，
+现代浏览器基本都具备并行下载能力，
+浏览器对域名相同的资源是有并行下载限制的。
+
+
+
+发送请求 —— 添加缓存、合并文件，都可以减少请求数量
+
+单个RTT内传输上限为14KB
+
+一个包最小传输单元是1500字节（B）
+    20字节 TCP协议的头
+    20字节 IP协议的头
+    1460 B * 10 = 14600 B
+    14600 B / 1024 ≈ 14 KB
+
+如果文件合并后小于14KB，就减少了两次RTT(一去一回), 也少了一次http请求
+节约几十上百毫秒
+
+
+
+
+等待服务器响应 —— 这一步的优化只能是在 MySQL 和后台方面做考虑了
+
+CDN
+
+
+
+下载服务器响应内容 —— 添加 Etag、Expires 响应头，得到 304 响应，可以降低下载量
+
+localStorage
+
+Cache-Control
+
+Expires
+
+Last-Modified
+
+Etag 
+
+
+
+
+
+
+解析 HTML、CSS、JS 等 —— 去掉无用的 HTML、CSS 和 JS 即可减少解析时间
+
+css 简写
+
+
+
+渲染 HTML、CSS、JS 和图片等 —— 避免使用低效的 HTML、CSS 和 JS 即可
+
+css 开启硬件加速, 减少重绘和重排
+
+
+js 节流函数, 文档碎片
+
+
+
+
+
+响应用户的点击事件等 —— 尽量不在前端做复杂的运算等……
+
+
+
+
+
+组件异步加载 
+
+配合单页面应用路由和构件工具（webpack）实现
+
+
+
+
+服务端渲染 ( SSR )
+
+
+
+
+
+```
+
+
+
+
+[参考1](https://zhuanlan.zhihu.com/p/22756207)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</x-markdown>
+    <script src="https://cdn.bootcss.com/marked/0.3.6/marked.min.js"></script>
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

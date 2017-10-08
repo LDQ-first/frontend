@@ -179,6 +179,30 @@ typeof
 
 
 
+### js 中值为假的值
+
+```
+undefined
+null
+false
+0, +0, -0
+NaN
+""或''（空字符串）
+
+```
+
+
+### 为什么推荐使用 === 不推荐 ==
+
+```
+
+=== 与 == 的区别就是，=== 不做类型转化，只要类型不同，就会返回 false。
+
+这就要求你在使用 === 前，自己手动进行类型转化了。
+
+```
+
+
 ###  document.write 作用
 
 ```
@@ -1137,7 +1161,8 @@ function* gen() {
 
 generator yield
 
-a generator is a special routine that can be used to control the iteration behaviour of a loop. 
+a generator is a special routine 
+that can be used to control the iteration behaviour of a loop. 
 -- 维基百科
 
 

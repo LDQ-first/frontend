@@ -60,6 +60,63 @@ cookie隔离
 
 ```
 
+响应头
+
+expires HTTP 1.0
+
+catch-control HTTP 1.1  优先级更高
+
+max-age
+客户端缓存时间
+s-maxage
+CDN服务器端缓存时间
+
+public cdn 缓存
+private 客户端 缓存
+
+no-cache 会向服务器发请求查看是否使用缓存
+
+no-store 一定不使用缓存
+
+
+
+
+
+Last-Modified
+
+UTC时间
+
+缺点
+某些服务器不能获取精确的修改时间
+文件时间改了，但内容没改
+
+与 catch-control 共用
+
+
+
+Etag
+
+hash值
+
+
+与 catch-control 共用
+
+
+
+
+请求头
+
+
+If-Modified-Since
+
+
+
+
+If-None-Match
+
+
+
+
 
 
 

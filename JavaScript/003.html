@@ -177,7 +177,19 @@ console.log(titleCase5(a))
 
 ```
 
+// 正常匹配
+var url = /(http|ftp):\/\/([^/\r\n]+)(\/[^\r\n]*)?/;
 
+url.exec('http://google.com/');
+// ["http://google.com/", "http", "google.com", "/"]
+
+
+
+// 非捕获组匹配
+var url = /(?:http|ftp):\/\/([^/\r\n]+)(\/[^\r\n]*)?/;
+
+url.exec('http://google.com/');
+// ["http://google.com/", "google.com", "/"]
 
 
 

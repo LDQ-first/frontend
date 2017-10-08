@@ -48,7 +48,7 @@ xxxx视频网站不断接到用户举报，自己的礼品莫名丢失。
 
 服务端在收到路由请求时，生成一个随机数，
 在渲染请求页面时把随机数埋入页面
-（一般埋入 form 表单内，<input type="hidden" name="_csrf_token" value="xxxx">）
+（一般埋入 form 表单内，< input type="hidden" name="_csrf_token" value="xxxx" >）
 服务端设置setCookie，把该随机数作为cookie或者session种入用户浏览器
 当用户发送 GET 或者 POST 请求时带上_csrf_token参数
 （对于 Form 表单直接提交即可，因为会自动把当前表单内所有的 input 提交给后台，
@@ -59,24 +59,7 @@ xxxx视频网站不断接到用户举报，自己的礼品莫名丢失。
 
 
 
-```
 
-[参考1](https://zhuanlan.zhihu.com/p/22521378)
-
-
-![001](../Img/安全/csrf/001.jpg)
-
-![002](../Img/安全/csrf/002.jpeg)
-![003](../Img/安全/csrf/003.jpeg)
-
-
-- （上图是某电商网站的真实设置，
-这里页面上设置的 token和session里设置的token 虽然不直接相等，
-但 md5('1474357164624') === '4bd4e512b0fbd9357150649adadedd4e'，
-后台还是很好计算的）
-
-
-```
 
 「方案出的很赞， 不过还有几点需要注意一下」：
 
@@ -97,7 +80,25 @@ https://xxxx.com/gift?giftId=aabbcc&_csrf_token=xxxxx
 短时间内可以使用这个 token 来操作其他 GET 接口。
 
 
+
+
 ```
+
+[参考1](https://zhuanlan.zhihu.com/p/22521378)
+
+
+![001](../Img/安全/csrf/001.jpg)
+
+![002](../Img/安全/csrf/002.jpeg)
+![003](../Img/安全/csrf/003.jpeg)
+
+
+- （上图是某电商网站的真实设置，
+这里页面上设置的 token和session里设置的token 虽然不直接相等，
+但 md5('1474357164624') === '4bd4e512b0fbd9357150649adadedd4e'，
+后台还是很好计算的）
+
+
 
 
 

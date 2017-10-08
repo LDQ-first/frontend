@@ -74,6 +74,7 @@ copyWithin
 
 ### String
 
+[String](./String.html)
 
 ```
 length
@@ -124,36 +125,44 @@ String.raw()
 
 ### Object
 
+[Object](./Object.html)
+
 ```
 
 Object.keys
 Object.getOwnPropertyNames
 
-Object.getOwnPropertyDescriptor
-Object.defineProperty
-Object.defineProperties
-Object.getOwnPropertyNames
+Object.getOwnPropertyDescriptor()：获取某个属性的attributes对象。
+Object.defineProperty()：通过attributes对象，定义某个属性。
+Object.defineProperties()：通过attributes对象，定义多个属性。
+Object.getOwnPropertyNames()：返回直接定义在某个对象上面的全部属性的名称。
 
-Object.preventExtensions
-Object.isExtensible
-Object.seal
-Object.isSealed
-Object.freeze
-Object.isFrozen
 
-Object.create
-Object.getPrototypeOf
+Object.preventExtensions()：防止对象扩展。
+Object.isExtensible()：判断对象是否可扩展。
+Object.seal()：禁止对象配置。
+Object.isSealed()：判断一个对象是否可配置。
+Object.freeze()：冻结一个对象。
+Object.isFrozen()：判断一个对象是否被冻结。
+
+
+Object.create()：该方法可以指定原型对象和属性，返回一个新的对象。
+Object.getPrototypeOf()：获取对象的Prototype对象。
+
 
 
 
 Object实例对象的方法，主要有以下六个。
 
-valueOf
-toString
-toLocaleString
-hasOwnProperty
-isPrototypeOf
-propertyIsEnumerable
+valueOf()：返回当前对象对应的值。
+toString()：返回当前对象对应的字符串形式。
+toLocaleString()：返回当前对象对应的本地字符串形式。
+hasOwnProperty()：判断某个属性是否为当前对象自身的属性，还是继承自原型对象的属性。
+isPrototypeOf()：判断当前对象是否为另一个对象的原型。
+propertyIsEnumerable()：判断某个属性是否可枚举。
+
+
+
 
 
 
@@ -169,7 +178,32 @@ propertyIsEnumerable
 
 ### Math 
 
+[Math](./Math.html)
+
+
+
 ```
+
+Math对象提供以下一些数学方法。
+
+Math.abs()：绝对值
+Math.ceil()：向上取整
+Math.floor()：向下取整
+Math.max()：最大值
+Math.min()：最小值
+Math.pow()：指数运算
+Math.sqrt()：平方根
+Math.log()：自然对数
+Math.exp()：e的指数
+Math.round()：四舍五入
+Math.random()：随机数
+
+
+
+
+
+
+
 
 
 ```

@@ -65,6 +65,13 @@ Array.prototype.slice.call(document.querySelectorAll("div"));
 Array.prototype.slice.call(arguments);
 
 
+
+Array.from(arrayLike)
+[...arrayLike]
+
+
+
+
 ```
 
 
@@ -119,6 +126,23 @@ function findLongest(arr) {
 }
 
 findLongest(['aaa', 'bb', 'c']) // "aaa"
+
+```
+
+
+
+### 求出一个数组最大元素的写法。
+
+```
+
+Math.max.apply(null, [14, 3, 77])
+
+
+Math.max(...[14, 3, 77])
+
+
+Math.max(14, 3, 77)
+
 
 ```
 

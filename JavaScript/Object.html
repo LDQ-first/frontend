@@ -22,6 +22,98 @@
 
 ```
 
+var arr = ['a', 'b', 'c']
+var obj = {
+    a: 1,
+    b: 2
+}
+
+Object.keys(arr)
+//["0", "1", "2"]
+
+Object.keys(obj)
+//["a", "b"]
+
+
+
+Object.getOwnPropertyDescriptor()：获取某个属性的attributes对象。
+Object.defineProperty()：通过attributes对象，定义某个属性。
+Object.defineProperties()：通过attributes对象，定义多个属性。
+Object.getOwnPropertyNames()：返回直接定义在某个对象上面的全部属性的名称。
+
+
+Object.preventExtensions()：防止对象扩展。
+Object.isExtensible()：判断对象是否可扩展。
+Object.seal()：禁止对象配置。
+Object.isSealed()：判断一个对象是否可配置。
+Object.freeze()：冻结一个对象。
+Object.isFrozen()：判断一个对象是否被冻结。
+
+
+Object.create()：该方法可以指定原型对象和属性，返回一个新的对象。
+Object.getPrototypeOf()：获取对象的Prototype对象。
+
+
+
+
+Object实例对象的方法，主要有以下六个。
+
+valueOf()：返回当前对象对应的值。
+toString()：返回当前对象对应的字符串形式。
+toLocaleString()：返回当前对象对应的本地字符串形式。
+hasOwnProperty()：判断某个属性是否为当前对象自身的属性，还是继承自原型对象的属性。
+isPrototypeOf()：判断当前对象是否为另一个对象的原型。
+propertyIsEnumerable()：判断某个属性是否可枚举。
+
+
+
+
+
+Object.keys方法和Object.getOwnPropertyNames方法很相似，
+一般用来遍历对象的属性。它们的参数都是一个对象，都返回一个数组，
+该数组的成员都是对象自身的（而不是继承的）所有属性名。
+它们的区别在于，Object.keys方法只返回可枚举的属性，
+
+Object.getOwnPropertyNames方法还返回不可枚举的属性名。
+
+
+var o = {
+  p1: 123,
+  p2: 456
+};
+
+Object.keys(o)
+// ["p1", "p2"]
+
+Object.getOwnPropertyNames(o)
+// ["p1", "p2"]
+
+
+
+var a = ["Hello", "World"];
+
+Object.keys(a)
+// ["0", "1"]
+
+Object.getOwnPropertyNames(a)
+// ["0", "1", "length"]
+
+
+Object.keys(o).length
+Object.getOwnPropertyNames(o).length
+
+
+
+
+
+valueOf方法的作用是返回一个对象的“值”，默认情况下返回对象本身。
+
+var o = new Object();
+o.valueOf() === o // true
+
+
+
+
 
 
 
@@ -35,6 +127,11 @@
 
 
 ```
+
+
+
+[参考1](http://javascript.ruanyifeng.com/stdlib/object.html)
+
 
 
 

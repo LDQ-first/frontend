@@ -148,6 +148,30 @@ Math.max(14, 3, 77)
 
 
 
+### 首写字母大写
+
+```
+
+function upp(str) {
+    console.log(str.slice(0, 1).toUpperCase().concat(str.slice(1)))
+}
+
+upp('apple')
+
+
+//多个单词
+
+function titleCase5(str) {  
+    return str.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase())
+}  
+console.log(titleCase5(a))
+
+
+
+
+```
+
+
 
 
 

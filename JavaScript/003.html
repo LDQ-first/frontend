@@ -19,19 +19,94 @@
 
 ## JavaScript 技巧
 
+
+### 获取随机数，要求长度一致的字符串格式
+
+
+```
+
+var random = Math.random()
+console.log(random)
+console.log(typeof random)
+var random = random + '00000000000'
+//转成字符串，并保证有10位
+var random = random.slice(0, 10)
+console.log(random)
+console.log(typeof random)
+
+
+```
+
+
+
 ### 对象，类数组转数组
 
 ```
 
+var obj = {
+    0: 'a',
+    1: 'b',
+    length: 2
+}
+
+
+//var objArr = Array.prototype.slice.call(obj)
+var objArr = [].slice.call(obj)
+console.log(objArr)
+
+
+objArr.forEach((item, index) => {
+    console.log(item, index)
+})
+
+
+
 
 
 ```
+
+
+### 遍历对象和数组的forEach的函数
+
+```
+
+function forEach(obj, fn) {
+    if(obj instanceof Array) {
+        obj.forEach((item, index) => {
+            fn(item, index)
+        })
+    } else {
+        for(let key in obj) {
+            fn(obj[key], key)
+        }
+    }
+}
+
+
+
+
+```
+
+
+
 
 
 ### 文档碎片
 
 ```
 
+
+const lists = document.querySelector('.lists')
+
+const frag = document.createDocumentFragment()
+
+for(let i = 0; i < 10; i++) {
+    const list = document.createElement('li')
+    list.innerHTML = "List item" + i
+    frag.appendChild(li)
+}
+
+lists.appendChild(frag)
 
 
 ```
@@ -69,6 +144,18 @@
 ### 封装DOM查询
 
 ```
+
+
+
+```
+
+
+
+
+### setTimeout模拟setInterval
+
+```
+
 
 
 

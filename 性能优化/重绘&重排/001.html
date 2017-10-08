@@ -20,10 +20,118 @@
 ## 重绘&重排
 
 
+### css性能让js变慢
+
+```
+
+UI线程
+js线程
+
+
+css 阻塞js执行
+
+
+
+```
 
 
 
 
+### repaint reflow
+
+```
+
+
+repaint触发页面重新布局
+
+盒子模型相关
+定位浮动相关
+内部文字相关
+
+
+
+ 
+reflow 改变外观风格，不触发页面重新布局
+
+背景
+字体颜色
+阴影
+
+
+```
+
+
+### 提高性能方法
+
+```
+
+1. 避免触发重绘重排
+
+2. 让频繁重绘重排的元素独立一个图层
+
+3. 开启 GPU加速 （transform: translate3d(0, 0, 0)）
+
+
+
+- 创建图层的方法
+
+1. 3D或透视变换css属性（perspective，transform ）
+
+2. <video>
+
+3. WebGL 或 Canvas
+
+4. 子元素在自己的层中
+
+5. 元素 在 z-index 较低的兄弟元素上面渲染
+
+
+transform: translateZ(0)
+
+
+transform: translateY(xx) 替代 top 
+
+opacity 替代  visibilty: hidden
+
+
+用className代替style.xxx
+
+
+
+离线dom
+
+先将dom添加display：none
+改为后在添加dispaly: block 
+
+
+不要将DOM结点属性值放在一个循环中当成循环变量
+
+
+不使用table布局
+小改动会造成整个table重新布局
+
+
+
+
+chrome检测性能
+
+Performance
+
+Flame Chart - Main
+
+
+Layers 
+
+查看图层
+
+
+
+
+
+
+
+
+```
 
 
 

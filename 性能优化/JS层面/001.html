@@ -24,7 +24,10 @@
 
 ```
 
+缓存dom查询
+文档碎片
 节流函数
+DOMContentLoaded 代替 onload 事件
 懒加载与预加载
 组件异步加载
 服务端渲染
@@ -33,7 +36,45 @@
 
 ```
 
+### 缓存dom查询
 
+
+```
+
+const list = document.querySelector('li')
+
+for(let i = 0; i < list.length; i++) {
+
+}
+
+
+```
+
+
+
+
+
+
+### 文档碎片
+
+```
+
+const lists = document.querySelector('.lists')
+
+const frag = document.createDocumentFragment()
+
+for(let i = 0; i < 10; i++) {
+    const list = document.createElement('li')
+    list.innerHTML = "List item" + i
+    frag.appendChild(li)
+}
+
+lists.appendChild(frag)
+
+
+
+
+```
 
 
 
@@ -41,13 +82,42 @@
 
 ```
 
+const button = document.querySelector('.btn')
 
 
+button.addEventListener('click', () => {
+    if(timer) {
+        clearTimeout(tiemr)
+    }
+    const timer = setTimeout(() => {
 
-
+    }, 100)
+})
 
 
 ```
+
+### DOMContentLoaded 代替 onload 事件
+
+```
+
+document.addEventListener('DOMContentLoaded', () => {
+    dom渲染完
+    资源没加载完
+
+
+})
+
+
+window.onlaod(() => {
+    资源加载完
+
+
+})
+
+
+```
+
 
 
 
@@ -55,6 +125,50 @@
 ### 懒加载与预加载
 
 ```
+
+懒加载
+资源（图片）在进入可视区后才加载
+
+滚动判断资源进入可视区
+
+
+let winHeight = window.innerHeight,
+let winTop = window.scrollY
+const imgs = docuemnt.querySelector('img')
+
+function init () {
+    _check (imgs)
+    window.addEventListener('scroll', () => {
+        _showImg()
+    })
+}
+
+    
+function _check (imgs) {
+    if( winTop + winHeight > imgs.offsetTop  && 
+        winTop < imgs.offsetTop + imgs.offsetHeight) {
+        imgs.src = imgs.getAttribute('data-src')
+    }
+}
+
+function _showImg () {   
+    _check(imgs)
+}
+
+
+
+
+预加载
+资源在使用前提前加载
+
+img display: none
+
+
+var image = new Image()
+image.src = '...'
+
+
+
 
 
 

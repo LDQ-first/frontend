@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../style/default.css">
+    <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+</head>
+<body>
+<x-markdown>
+
+# 导航
+
+* [返回Github](https://github.com/LDQ-first/frontend)
+* [返回首页](../../index.html)
+
+
+
+## 题目
+
+
+
+```
+
+1. 细心 基础api
+
+
+// 尽可能全面正确的解析一个任意url的所有参数为Object。
+var url = 'http://www.domain.com/?user=anonymous&id=123&city=%E5%8C%97%E4%BA%AC&id=456&id=678&enabled';
+
+/**
+结果：
+{
+   user: 'anonymous',
+   id: [123, 456], // 重复出现的 key 要组装成数组，能被转成数字的就转成数字类型
+   city: '北京', // 中文
+   enabled: true, // 未指定值的 key 约定值为 true
+}
+*/
+
+
+
+
+
+2.实现一个最简单的模板引擎
+render('我是{{name}}，年龄{{age}}，性别{{sex}}',{
+	name:'姓名',
+	age:18
+})
+
+// 结果： 我是姓名，年龄18，性别undefined。
+
+
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+</x-markdown>
+    <script src="https://cdn.bootcss.com/marked/0.3.6/marked.min.js"></script>
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../js/main.js"></script>
+<script>
+    // 尽可能全面正确的解析一个任意url的所有参数为Object。
+    var url = 'http://www.domain.com/?user=anonymous&id=123&city=%E5%8C%97%E4%BA%AC&id=456&id=678&enabled';
+
+    /**
+    结果：
+    {
+    user: 'anonymous',
+    id: [123, 456], // 重复出现的 key 要组装成数组，能被转成数字的就转成数字类型
+    city: '北京', // 中文
+    enabled: true, // 未指定值的 key 约定值为 true
+    }
+    */
+
+    var parseParam = (url) => {
+        /*
+            decodeURI
+        */
+        var result = {}
+        var paramsStr = decodeURI(url).replace(/(.*\?)(.*)/, '$2')
+        var paramsArr = paramsStr.split('&')
+        
+        paramsArr.forEach((param, index) => {
+            var paramArr = param.split('=')
+            if(paramArr[0] && !paramArr[1]) {
+                result[paramArr[0]] = true
+            }
+            else if(result.hasOwnProperty(paramArr[0])) {
+                if(! (result[paramArr[0]] instanceof Array)) {
+                    var resultKeyValueArr = []
+                    resultKeyValueArr.push(result[paramArr[0]], paramArr[1])
+                    result[paramArr[0]] = resultKeyValueArr
+                } else {
+                    var resultKeyValueArr = result[paramArr[0]]
+                    resultKeyValueArr.push(paramArr[1])
+                    result[paramArr[0]] = resultKeyValueArr
+                }
+            
+            } else {
+                result[paramArr[0]] = paramArr[1]
+            }
+        })
+        console.log(result)
+
+    }
+    parseParam(url);
+
+</script>
+<script>
+    //实现一个最简单的模板引擎
+    render('我是{{name}}，年龄{{age}}，性别{{sex}}',{
+        name:'姓名',
+        age:18
+    })
+
+    // 结果： 我是姓名，年龄18，性别undefined。
+    function render (template, option) {
+        var reg = /{{(.*)}}/g
+        var result = template.match(reg)
+        console.log(result)
+    }
+
+</script>
+</body>
+</html>

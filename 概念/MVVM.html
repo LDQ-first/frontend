@@ -53,6 +53,100 @@ Object.defineProperty()
 
 
 
+< !DOCTYPE html >
+< html >
+< head >
+  < meta charset="utf-8" >
+  < title >JS Bin< /title >
+  < style >
+  .red{
+    color: red;
+  }
+  < /style >
+< /head >
+< body >
+  < form  >
+    < p >姓名< input type="text" name="name" >
+    < p >年龄< input type="number" name="age" >
+    < p >爱好< input type="text" name="hobby" >
+    < p >< input type="submit" value="提交" >
+  < /form >
+  < script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" >< /script >
+< /body >
+< /html >
+
+
+
+
+var frank = {
+  _data: {
+    age: 18,
+    name: 'frank'
+  }
+}
+for(let key in frank._data){
+  Object.defineProperty(frank, key, {
+    get: function(){
+      console.log('frank.'+key+' 被读取了')
+      return frank._data[key]
+    },
+    set: function(xxx){
+      console.log('frank.'+key+' 被设置了')
+      $('input[name="'+key+'"]').val(xxx)
+      frank._data[key] = xxx
+      
+    }
+  })
+}
+
+function createGetAndSet(key, defaultValue){
+  
+  Object.defineProperty(frank, key, {
+    get: function(){
+      console.log('frank.'+key+' 被读取了')
+      return frank._data[key]
+    },
+    set: function(xxx){
+      console.log('frank.'+key+' 被设置了')
+      $('input[name="'+key+'"]').val(xxx)
+      frank._data[key] = xxx
+      
+    }
+  })
+  frank._data[key] = defaultValue
+}
+
+
+
+
+$('form').on('input', 'input[name]', function(e){
+  let $input = $(e.currentTarget)
+  let name = $input.attr('name')
+  let value = $input.val()
+  console.log(name, value)
+  frank[name] = value
+})
+
+createGetAndSet('hobby', 0)
+
+$('input[name="name"]').val(frank.name)
+$('input[name="age"]').val(frank.age)
+$('input[name="hobby"]').val(frank.hobby)
+
+$('form').on('submit', function(e){
+  e.preventDefault()
+  console.log(frank)
+})
+var n = 0
+let timer = setInterval(function(){
+  frank.name = 'xxxx'
+  if(n === 10){
+    frank.name = 'frank'
+    clearInterval(timer)
+  }
+  
+},10)
+
 
 
 

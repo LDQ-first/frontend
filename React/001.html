@@ -21,8 +21,62 @@
 
 ```
 
+JSX
 
-生命周期
+一般写在render生命周期函数里
+
+语法:
+return (
+    写HTML 
+
+    注意 有些 属性要改写 
+    如 ： class =》 className 
+
+    标签要闭合 < img src="" > =》 < img src="" /> 
+
+    可以添加js
+    但要用 {} 括起来 
+
+
+)
+
+
+组件
+
+import React, { Component } from 'react'
+
+class NotFound extends Component {
+
+    render () {
+
+        return (
+
+
+        )
+    }
+}
+
+
+
+例子
+
+
+import React, { Component } from 'react'
+
+
+export default class NotFound extends Component {
+
+    render() {
+
+        return (
+            < Container className="noPadding" >
+               < NotFoundDiv >
+                   < h1 className="title" >404< /h1 >
+               < /NotFoundDiv >
+            < /Container >
+        )
+    }
+}
 
 
 
@@ -30,7 +84,47 @@
 
 
 
+ref 
+获取dom元素
 
+< div className="contactContent" 
+    ref={contact => this._contact = contact} >       
+< /div >
+
+
+
+state 
+数据
+
+constructor(props) {
+    super(props) 
+    this.state = {
+        
+    }
+} 
+
+
+props 
+
+子组件接受父组件的数据
+
+const { _this } = this.props
+
+
+
+PropTypes
+
+
+props 类型检查
+
+import PropTypes from 'prop-types'
+
+
+static get propTypes() {
+    return {
+        _this: PropTypes.object
+    }
+}
 
 
 

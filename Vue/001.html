@@ -104,6 +104,37 @@ Vue 和 TS 的整合可能不如 Angular 那么深入
 
 
 
+### 独立构建 运行时构建
+
+
+```
+
+
+一、独立构建包含模板编译器，运行时构建不包含模板编译器。
+二、模板编译器的作用就是将template选项编译成render函数，render函数是渲染的关键。
+三、鉴于以上两点，使用运行时构建时，不能出现template选项，因为此时没有模板编译器。
+但是有一种情况除外：即webpack+vue-loader情况下单文件组件中出现template是可以的。
+四、使用vue-cli生成项目时，会提醒使用哪种构建方式，npm包默认导出的是运行时构建，
+如果需要使用独立构建，需要在webpack中配置alias(设置 alias 为 vue.common.js)
+五、目前暂时发现的两者的应用场景上的区别有：
+
+需要注意Vue实例化时的方式，运行时构建方式下实例化Vue时，不要出现template属性
+index.html中不要出现template或者是通过vue-router渲染的route-view
+
+运行时构建一定要render函数
+
+
+
+```
+
+
+
+
+
+
+
+
+
 
 
 

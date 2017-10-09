@@ -23,8 +23,66 @@
 
 ```
 
+v-for 循环
 
 
+显示
+
+if 
+v-if v-else-if v-else
+
+v-show
+
+
+绑定 DOM 属性
+v-bind 缩写 :
+
+
+事件监听
+v-on 缩写 @
+
+
+双向数据绑定
+v-model
+
+v-bind + v-on 相当于 v-model 
+
+但有利于了解数据在什么时候被谁怎么改变的
+
+
+
+
+innerText
+v-text
+
+
+
+innerHTML
+v-html
+
+有被XSS攻击的风险
+只在可信内容上使用 v-html，永不用在用户提交的内容上
+
+
+
+跳过这个元素和它的子元素的编译过程。可以用来显示原始 Mustache 标签。
+v-pre
+
+
+
+这个指令保持在元素上直到关联实例结束编译。
+和 CSS 规则如 [v-cloak] { display: none } 
+一起用时，这个指令可以隐藏未编译的 Mustache 标签
+直到实例准备完毕。
+v-cloak
+
+
+
+
+只渲染元素和组件一次。随后的重新渲染，
+元素/组件及其所有的子节点将被视为静态内容并跳过。
+这可以用于优化更新性能。
+ v-once
 
 
 

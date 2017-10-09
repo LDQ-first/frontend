@@ -19,9 +19,94 @@
 
 ## Vue
 
+### 简介
+
+```
+
+Vue 是一套构建用户界面的渐进式MVVM框架
+Vue 的核心库只关注视图层，将路由交给 Vue-Router ，状态管理交个 Vuex 
+
+
+- Vue 和 React 的共同点
+
+使用 Virtual DOM
+提供了响应式 (Reactive) 和组件化 (Composable) 的视图组件
+将注意力集中保持在核心库，而将其他功能如路由和全局状态管理交给相关的库
 
 
 
+
+- Vue的优势
+
+在 Vue 应用中，组件的依赖是在渲染过程中自动追踪的，
+所以系统能精确知晓哪个组件确实需要被重渲染。
+React 由于 发生变化时会重新渲染整个组件树，所以需要做一些额外的优化工作
+(PureComponent shouldComponentUpdate Immutable Reselect)
+
+
+vue的template模板就是HTML写法，比起jsx更容易编写和理解
+
+vue在每个单文件组件中可以访问自己独立的css module，
+在style标签里添加一个属性scoped，不会污染全局
+
+vue提供大量的指令来简化开发中的重复劳动
+如：v-for 可以构建循环，在React中要自己写（使用map构建）
+
+Vue 设置样式的默认方法是单文件组件里类似 style 的标签
+
+
+
+- Vue的劣势
+
+生态比不上React
+
+在原生开发中，Weex 还没有 React Native 成熟
+
+
+
+
+- Vue 与 Angular1
+
+
+在 API 与设计两方面上 Vue.js 都比 AngularJS 简单得多
+
+
+Vue.js 是一个更加灵活开放的解决方案。它允许你以希望的方式组织应用程序，
+而不是在任何时候都必须遵循 AngularJS 制定的规则，这让 Vue 能适用于各种项目。
+
+
+AngularJS 使用双向绑定，Vue 在不同组件间强制使用单向数据流。
+这使应用中的数据流更加清晰易懂。
+
+
+在 Vue 中指令和组件分得更清晰。指令只封装 DOM 操作，
+而组件代表一个自给自足的独立单元——有自己的视图和数据逻辑。
+在 AngularJS 中两者有不少相混的地方。
+
+Vue 有更好的性能，并且非常非常容易优化，因为它不使用脏检查。
+
+
+
+
+
+- Vue 与 Angular2
+
+Vue 和 TS 的整合可能不如 Angular 那么深入
+在中小型规模的项目中，引入 TS 可能并不会带来太多明显的优势。
+在这些情况下，用 Vue 会是更好的选择，
+因为在不用 TS 的情况下使用 Angular 会很有挑战性。
+
+
+
+```
+
+
+
+
+
+
+
+[参考1](https://cn.vuejs.org/v2/guide/)
 
 
 

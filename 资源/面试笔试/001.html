@@ -19,7 +19,9 @@
 
 ## 题目
 
+### 答案 查看源代码
 
+- 控制台查看结果
 
 ```
 
@@ -76,7 +78,7 @@ render('我是{{name}}，年龄{{age}}，性别{{sex}}',{
     <script src="../../js/main.js"></script>
 <script>
     // 尽可能全面正确的解析一个任意url的所有参数为Object。
-    var url = 'http://www.domain.com/?user=anonymous&id=123&city=%E5%8C%97%E4%BA%AC&id=456&id=678&enabled';
+    const url = 'http://www.domain.com/?user=anonymous&id=123&city=%E5%8C%97%E4%BA%AC&id=456&id=678&enabled';
 
     /**
     结果：
@@ -88,26 +90,26 @@ render('我是{{name}}，年龄{{age}}，性别{{sex}}',{
     }
     */
 
-    var parseParam = (url) => {
+    const parseParam = (url) => {
         /*
             decodeURI
         */
-        var result = {}
-        var paramsStr = decodeURI(url).replace(/(.*\?)(.*)/, '$2')
-        var paramsArr = paramsStr.split('&')
+        let result = {}
+        const paramsStr = decodeURI(url).replace(/(.*\?)(.*)/, '$2')
+        const paramsArr = paramsStr.split('&')
         
         paramsArr.forEach((param, index) => {
-            var paramArr = param.split('=')
+            const paramArr = param.split('=')
             if(paramArr[0] && !paramArr[1]) {
                 result[paramArr[0]] = true
             }
             else if(result.hasOwnProperty(paramArr[0])) {
                 if(! (result[paramArr[0]] instanceof Array)) {
-                    var resultKeyValueArr = []
+                    const resultKeyValueArr = []
                     resultKeyValueArr.push(result[paramArr[0]], paramArr[1])
                     result[paramArr[0]] = resultKeyValueArr
                 } else {
-                    var resultKeyValueArr = result[paramArr[0]]
+                    const resultKeyValueArr = result[paramArr[0]]
                     resultKeyValueArr.push(paramArr[1])
                     result[paramArr[0]] = resultKeyValueArr
                 }
@@ -131,11 +133,14 @@ render('我是{{name}}，年龄{{age}}，性别{{sex}}',{
 
     // 结果： 我是姓名，年龄18，性别undefined。
     function render (template, option) {
-        var reg = /{{(.*)}}/g
-        var result = template.match(reg)
-        console.log(result)
+        const reg = /{{([^}}]*)}}/g
+        const result = template.replace(reg, (match, $1) => option[$1] )
+        console.log(result)   
     }
 
+</script>
+<script>
+    
 </script>
 </body>
 </html>

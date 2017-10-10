@@ -23,6 +23,8 @@
 
 - 控制台查看结果
 
+- 部分题目由于题目的特殊性而只提供伪代码答案
+
 ```
 
 1. 细心 基础api
@@ -62,9 +64,14 @@ render('我是{{name}}，年龄{{age}}，性别{{sex}}',{
 
 
 
+
+
 4. 请用js计算出我到底有多少钱（输出Number类型数字，代码尽量简洁，考虑通用情况）
 var string = "我的账户余额：2,235,467.20";
 console.log(?);
+
+
+
 
 
 5. 有一个全局变量 a，有一个全局函数 b，实现一个方法bindData，执行后，a的任何赋值都会触发b的执行。
@@ -76,6 +83,103 @@ function b(){
 }
 bindData(obj, b)
 obj.a = 2; // 此时输出 a的值发生改变
+
+
+
+
+
+6. 实现一个 js 的 class ，名字叫做：AnimateToNum，功
+能是从某个数字递增或者递减到另外一个数字，并且不管数字如何变化，
+都可以在指定的时间内完成。
+<!--var AnimateToNum = require("animate-num");-->
+持续变化, 边界处理
+
+暂无答案
+
+class AnimateToNum {
+   
+}
+
+var numAnim = new AnimateToNum({
+  animTime:2000, //每次数字变动持续的时间（ms），
+  initNum:500, //初始化的数字
+  onChange:function(num){
+    console.log(num);
+  }
+});
+ 
+numAnim.toNum(100); 
+ 从500变化到100，用2000ms的时间，
+在onChange回调中会一直从500倒数到100
+
+
+
+
+
+7. 现提供几个读取文件的方法，不借助全局变量实现一个函数，
+ 函数可以执行一次后返回一个目录下所有文件中是 .js 后缀的文件列表
+
+递归
+
+var readdirSync = function(dir_path){ return [filename] } 
+// 读取一个文件夹下的所有文件夹和文件的路径列表（Array）
+
+var isDirectory = function(path) { return true/false; } 
+// 判断一个路径是否是文件夹
+
+var existsSync = function(path){ return true/false;} 
+// 判断一个文件/文件夹是否存在
+ 
+var getJSFiles = function(path) {
+ 
+}
+getJSFiles('/code/'); // return 一个文件列表的数组
+
+
+
+答案
+    
+    var getJSFiles = function(path) {
+        let result = []
+            
+        if(existsSync(path)) {
+             if(isDirectory(path)) {
+                const filenames = readdirSync(path)
+                filenames.forEach((file, index) => {
+                   result = result.concat( getJSFiles(file))
+                })
+            } else if(/\.js$/.test(path)){
+                result.push(path)
+            }
+        } 
+        return result
+    }
+   
+
+
+
+
+
+8. 封装一个 CustomFetch 方法，利用原生的 fetch api，但是实现以下几个需求：
+所有请求默认带上一个 token，值是 xxx
+请求返回的时候，内部解析内容，并且判断 success 字段是否是 true，
+如果不是，在 catch 中可以拿到一个Error，message 和 code 是接口返回的对应的内容
+
+CustomFetch("http://api.com/api").then((data)=>{
+    console.log(data); // 如果后台返回 true
+}).catch((e)=>{
+    console.log(e.message); // 输出 “查询错误”
+});
+ 
+// 接口的返回模式
+{
+    success: false,
+    code: 'QUERY_ERROR',
+    data: {},
+    message: '查询错误'
+}
+
+
 
 ```
 
@@ -191,7 +295,9 @@ obj.a = 2; // 此时输出 a的值发生改变
         a: 1
     }
     function b(){
+        console.log(this)
         console.log('a的值发生改变')
+        console.log('a的值为: ', this.a)
     }
     bindData(obj, b)
     obj.a = 2; // 此时输出 a的值发生改变
@@ -201,11 +307,13 @@ obj.a = 2; // 此时输出 a的值发生改变
                (function() {
                    let value = target[key]
                    Object.defineProperty(target, key, {
-                       get: () => {
-                           return v
+                       get: function ()  {
+                           return value
                        },
-                       set: (_value) => {
+                       set: function (_value) {
                            value = _value
+                            /*event()*/
+                           /*console.log(this)*/
                            event.call(this)
                        }
                    })
@@ -213,6 +321,107 @@ obj.a = 2; // 此时输出 a的值发生改变
            }
        }
     }
+</script>
+<script>
+    /*     
+    实现一个 js 的 class ，名字叫做：AnimateToNum，功
+    能是从某个数字递增或者递减到另外一个数字，并且不管数字如何变化，
+    都可以在指定的时间内完成。
+    持续变化, 边界处理
+    */
+    /*var AnimateToNum = require("animate-num")*/
+
+    class AnimateToNum {
+        constructor(props) {
+            /*console.log(props)
+            console.log(this)*/
+            
+            
+        }
+        toNum (num) {
+            /*console.log(num)*/
+        }
+    }
+
+    var numAnim = new AnimateToNum({
+    animTime:2000, //每次数字变动持续的时间（ms），
+    initNum:500, //初始化的数字
+    onChange:function(num){
+        console.log(num);
+    }
+    });
+    
+    numAnim.toNum(100); 
+    /* 
+    从500变化到100，用2000ms的时间，
+    在onChange回调中会一直从500倒数到100
+    */
+</script>
+<script>
+    /*7. 现提供几个读取文件的方法，不借助全局变量实现一个函数，
+    函数可以执行一次后返回一个目录下所有文件中是 .js 后缀的文件列表
+        递归
+    */
+   var readdirSync = function(dir_path){ return ['filename'] } 
+    // 读取一个文件夹下的所有文件夹和文件的路径列表（Array）
+
+    var isDirectory = function(path) { return true/false; } 
+    // 判断一个路径是否是文件夹
+
+    var existsSync = function(path){ return true/false;} 
+    // 判断一个文件/文件夹是否存在
+    
+    var getJSFiles = function(path) {
+    
+    }
+    getJSFiles('/code/'); // return 一个文件列表的数组
+            
+
+    
+    // 判断一个文件/文件夹是否存在
+    var getJSFiles = function(path) {
+        let result = []     
+        if(existsSync(path)) {
+             if(isDirectory(path)) {
+                const filenames = readdirSync(path)
+                filenames.forEach((file, index) => {
+                 //   result = result.concat( getJSFiles(file))
+                })
+            } else if(/\.js$/.test(path)){
+                result.push(path)
+            }
+        } 
+        return result
+    }
+    getJSFiles('/code/') // return 一个文件列表的数组
+
+</script>
+<script>
+    /*
+    8. 封装一个 CustomFetch 方法，利用原生的 fetch api，但是实现以下几个需求：
+所有请求默认带上一个 token，值是 xxx
+请求返回的时候，内部解析内容，并且判断 success 字段是否是 true，
+如果不是，在 catch 中可以拿到一个Error，message 和 code 是接口返回的对应的内容
+*/
+
+CustomFetch("http://api.com/api").then((data)=>{
+    console.log(data); // 如果后台返回 true
+}).catch((e)=>{
+    console.log(e.message); // 输出 “查询错误”
+});
+ 
+// 接口的返回模式
+{
+    success: false,
+    code: 'QUERY_ERROR',
+    data: {},
+    message: '查询错误'
+}
+
+
+
+
+
 </script>
 </body>
 </html>

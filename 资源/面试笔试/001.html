@@ -56,7 +56,7 @@ render('我是{{name}}，年龄{{age}}，性别{{sex}}',{
 
 
 
-3.将一个任意长的数字变成逗号分割的格式
+3. 将一个任意长的数字变成逗号分割的格式
 	// 1234.56 => "1,234.56" , 123456789 => "123,456,789"
     parseToMoney(1234.56) // return "1,234.56"
 
@@ -67,6 +67,15 @@ var string = "我的账户余额：2,235,467.20";
 console.log(?);
 
 
+5. 有一个全局变量 a，有一个全局函数 b，实现一个方法bindData，执行后，a的任何赋值都会触发b的执行。
+const obj = {
+    a: 1
+}
+function b(){
+    console.log('a的值发生改变')
+}
+bindData(obj, b)
+obj.a = 2; // 此时输出 a的值发生改变
 
 ```
 
@@ -176,7 +185,34 @@ console.log(?);
     
 </script>
 <script>
-    
+   /* 5. 有一个全局变量 a，有一个全局函数 b，
+   实现一个方法bindData，执行后，a的任何赋值都会触发b的执行。*/
+    const obj = {
+        a: 1
+    }
+    function b(){
+        console.log('a的值发生改变')
+    }
+    bindData(obj, b)
+    obj.a = 2; // 此时输出 a的值发生改变
+    function bindData (target, event) {
+       for(let key in target) {
+           if(target.hasOwnProperty(key)) {
+               (function() {
+                   let value = target[key]
+                   Object.defineProperty(target, key, {
+                       get: () => {
+                           return v
+                       },
+                       set: (_value) => {
+                           value = _value
+                           event.call(this)
+                       }
+                   })
+               })()
+           }
+       }
+    }
 </script>
 </body>
 </html>

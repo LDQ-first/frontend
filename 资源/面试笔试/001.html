@@ -181,12 +181,189 @@ CustomFetch("http://api.com/api").then((data)=>{
 
 
 
+9. 将数字转换成中文大写的表示，处理到万级别，例如 12345 -> 一万二千三百四十五
+    function toLowerNum(num){
+       
+
+    }
+    console.log(toLowerNum(12345)); // 输出 一万二千三百四十五
+    console.log(toLowerNum(10001)); // 输出 一万零一
+    console.log(toLowerNum(10011)); // 输出 一万零十一
+    console.log(toLowerNum(10000)); // 输出 一万
+
+
+
+10. 算法题，实现一个函数，可以判断 a 字符串是否被包含在 b 字符串中
+    不能用原生api，自己实现一个字符串查找
+
+
+
+11. 下面五段代码分别输出什么？并且什么时候输出什么？
+ 
+ 
+for(var i = 0; i < 5; i++) {
+    console.log(i);
+}
+for(var i = 0; i < 5; i++) {
+    setTimeout(function() {
+        console.log(i);
+    }, 1000 * i);
+}
+for(var i = 0; i < 5; i++) {
+    (function(i) {
+        setTimeout(function() {
+            console.log(i);
+        }, i * 1000);
+    })(i);
+}
+for(var i = 0; i < 5; i++) {
+    (function() {
+        setTimeout(function() {
+            console.log(i);
+        }, i * 1000);
+    })(i);
+}
+for(var i = 0; i < 5; i++) {
+    setTimeout((function(i) {
+        console.log(i);
+    })(i), i * 1000);
+}
+
+
+12. 判断一个点是否在多边形内
+答案：从当前点画一条水平射线，判断射线与多边形各条边相交多少次，偶数次就是在多边形内
+
+对凸多边形有效
+
 ```
 
 
+1  如何用webpack管理应用的环境相关配置
+
+    webpack.DefinePlugin
+
+    防止测试环境一些代码带到线上造成安全隐患
+
+
+2  描述一个严谨的 mvvm 的分层
+
+    m v vm 
+
+    项目体现 m v vm 
+
+    逻辑要如何处理
+
+
+3  原型链：如何用 for in正确的遍历一个 Object 对象
+
+    hasOwnProperty
+    Object.hasOwnProperty(key) 
+
+
+4  语法：如何不用 for in 遍历一个 Object 对象
+
+    Object.keys(xx).map()
+
+    es6 可以传字符串
+
+
+5  网络：http资源缓存策略（讲述Cache-Control与Last-Modified的区别）
+ 
+    Cache-Control
+
+    不超时
+    不会发起请求
+
+
+    Last-Modified
+
+    会发起请求
 
 
 
+
+6  跨域：跨域的解决方案有哪些？JSONP的原理是什么？
+
+    脚本插入
+
+
+7  git：多人同时并行维护一个项目的多个需求，如何管理git的分支和合并流程
+
+    多人开发，压缩后 冲突
+
+    同一个文件
+    发布时间不同
+    git flow 
+
+    避免冲突
+
+  ![git flow](https://pic4.zhimg.com/v2-bb4c1ad11d90d5fba0f95028cd7f3f63_r.jpg)
+
+  
+  
+  有一个git的客户端source tree
+
+  分支
+  稳定分支，稳定分支
+
+  如何发布前端代码
+
+
+
+
+8. 数据传递：React或者Vue中两个兄弟组件之间数据共享如何实现？描述尽可能多的方案
+
+（父组件管理，事件，mobx或redux，react context等）
+
+flux, bus, vuex，mobx，redux 公用父组件，callback传递，事件监听
+
+
+
+
+ 还有安全是针对浏览器安全 比如xss
+ 有个高流量页面被注入脚本访问了你网站的api 
+ 这样瞬间流量就上来了 这样网站就有宕机的风险
+
+
+mobx
+ 自由
+
+
+
+
+9. 网络：从浏览器输入地址后发生了什么事情
+
+
+DNS lookup（缓存）
+发起请求 
+	- 判断expire缓存，是否发起真实请求
+	- 带上上次的 last-modified和etag。
+	- 带上cookie
+	- 带上诸多header，referrer，ua等
+	- 是否支持gzip
+请求到服务端
+	- 判断last-modified和etag，无变化直接返回304
+	- cdn 或者 应用服务器
+	- slb负载均衡
+	- nginx，转发，缓存策略等
+	- 应用进程
+	- response ,gzip
+请求响应
+	- 301 永久重定向，302 重定向
+	- 4xx 请求错误
+	- 5xx 应用内部错误
+浏览器渲染
+	- 解析dom
+	- 请求css,js，图片资源。并行，有限制
+	- 执行js，css会阻塞渲染和加载。
+
+
+
+10. 思路：我现在有个网页，需要在不同的渠道投放链接，如何区分渠道，
+并且在整个网站中所有的服务端交互中，服务端都可以方便的获取到当前操作的用户是从哪个来源跳转过来的
+
+
+参数 种到Cookie中
 
 
 
@@ -404,24 +581,164 @@ CustomFetch("http://api.com/api").then((data)=>{
     如果不是，在 catch 中可以拿到一个Error，message 和 code 是接口返回的对应的内容
     */
 
-    CustomFetch("http://api.com/api").then((data)=>{
-        console.log(data); // 如果后台返回 true
+    /*CustomFetch("http://api.com/api").then((data)=>{*/
+    CustomFetch("https://api.github.com/users").then((data)=>{
+      //  console.log(data); // 如果后台返回 true
     }).catch((e)=>{
-        console.log(e.message); // 输出 “查询错误”
+     //   console.log(e); // 输出 “查询错误”
+      //  console.log(e.message); // 输出 “查询错误”
     });
     
     // 接口的返回模式
-    {
+    /*{
         success: false,
         code: 'QUERY_ERROR',
         data: {},
         message: '查询错误'
+    }*/
+
+
+    function CustomFetch(url) {
+        return fetch(url)
+            .then((res) => {
+                if(res.success) {
+                    resolve(res.data)
+                } else {
+                    reject(res.message)
+                }
+            })
+            .catch((err) => {
+               /* console.log(err)*/
+            //   throw Error()
+            })
     }
 
 
+</script>
+<script>
+   //9. 将数字转换成中文大写的表示，处理到万级别，例如 12345 -> 一万二千三百四十五
+    function toLowerNum(num){
+        var number = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'] // 定义中文数字
+        var unit = ['', '十', '百', '千', '万'] // 定义中文基
+        var resultStr = []
+        var len = 0 // 数字长
+        var lastNumNotZero = false
+        while(num){
+            let n = num % 10
+            let u = len >= unit.length ? len % 5 + 1 : len % 5
 
+            // console.log(n, u, len)
+            // 添加基
+            // if(n || (len >= unit.length && lastNumNotZero))
+            if(
+                n // 当前位存在
+                || // 或者
+                ( u == unit.length - 1 && // u 和 长度均为 最后一位unit
+                    len == unit.length - 1
+                )
+            )
+                resultStr.unshift(unit[u])
 
-
+            // 处理数
+            if(
+                n || lastNumNotZero // 当前位和前一位不都为零则处理
+                && 
+                u !== unit.length - 1 // 且当前位不为最后一位基
+            ) 
+                resultStr.unshift(number[n])
+            lastNumNotZero = !!n
+            len++
+            num = Math.floor(num / 10)
+        }
+        return resultStr.join('')
+    }
+    console.log(toLowerNum(12345)); // 输出 一万二千三百四十五
+    console.log(toLowerNum(10001)); // 输出 一万零一
+    console.log(toLowerNum(10011)); // 输出 一万零十一
+    console.log(toLowerNum(10000)); // 输出 一万
+</script>
+<script>
+   // 10. 算法题，实现一个函数，可以判断 a 字符串是否被包含在 b 字符串中
+   //不能用原生api，自己实现一个字符串查找
+   // kmp算法
+   function strSearch() {
+        var b = 'abcabdef'
+        var a = 'cde'
+        var j = 0
+        var m = 0
+        var result = false
+        for(var i = 0; i < a.length; i++){
+            while(j < b.length && a[i] != b[j]){
+                j++
+            }
+            j++
+            if(a[i] != b[j]) m++
+            else m = 0
+        }
+        if(m === a.length) result = true
+        console.log(result)
+   }
+   strSearch() 
+</script>
+<script>
+    
+    //11. 下面五段代码分别输出什么？并且什么时候输出什么？
+    
+    
+    /*for(var i = 0; i < 5; i++) {
+        console.log(i)         //0， 1， 2， 3， 4
+    }*/
+    /*for(var i = 0; i < 5; i++) {
+        setTimeout(function() {
+            console.log(i)
+        }, 1000 * i)             //5个5  间隔
+    }*/
+    /*for(var i = 0; i < 5; i++) {
+        (function(i) {
+            setTimeout(function() {
+                console.log(i)
+            }, 1000)
+        })(i)                 // 0, 1, 2, 3, 4 同时
+    }*/
+    /*for(var i = 0; i < 5; i++) {
+        (function(i) {
+            setTimeout(function() {
+                console.log(i)
+            }, i * 1000)
+        })(i)                 // 0, 1, 2, 3, 4 间隔
+    }*/
+    /*for(var i = 0; i < 5; i++) {
+        (function() {
+            setTimeout(function() {
+                console.log(i)
+            }, i * 1000)
+        })(i)                    //5个5   间隔        
+    }*/
+    /*for(var i = 0; i < 5; i++) {
+        (function() {
+            setTimeout(function() {
+                console.log(i)
+            }, i * 1000)
+        })()                    //5个5     间隔      
+    }*/
+    /*for(var i = 0; i < 5; i++) {
+        setTimeout((function(i) {
+            console.log(i)
+        })(i), i * 1000)   
+    }                       // 相当于同步代码 0， 1 ，2，3， 4*/
+    /*for(var i = 0; i < 5; i++) {
+        setTimeout((function() {
+            console.log(i)
+        })(), i * 1000)   
+    }                       // 相当于同步代码 0， 1 ，2，3， 4*/
+    /*for(let i = 0; i < 5; i++) {
+        setTimeout(function() {
+            console.log(i)
+        }, i * 1000)   
+    }                       //  0， 1 ，2，3， 4 间隔*/
+</script>
+<script>
+    
 </script>
 </body>
 </html>

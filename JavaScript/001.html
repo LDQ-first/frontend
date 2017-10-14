@@ -126,6 +126,17 @@ Array instanceof Array
 false
 
 
+
+Object.__proto__ === Function.prototype
+true
+
+
+Function.prototype.__proto__ === Object.prototype 
+true
+
+
+
+
 ```
 
 
@@ -199,6 +210,9 @@ NaN
 === 与 == 的区别就是，=== 不做类型转化，只要类型不同，就会返回 false。
 
 这就要求你在使用 === 前，自己手动进行类型转化了。
+
+obj.a = null
+obj.a === null || obj.a === undefined
 
 ```
 

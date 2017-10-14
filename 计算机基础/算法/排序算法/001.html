@@ -21,7 +21,25 @@
 
 
 
+```
 
+1. 冒泡排序
+ 
+时间复杂度 O(n^2)  
+
+相邻比较
+
+2. 选择排序
+  
+时间复杂度 O(n^2)
+
+3. 插入排序
+
+时间复杂度 O(n^2)
+
+
+
+```
 
 
 
@@ -45,5 +63,195 @@
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <script src="../../../js/main.js"></script>
+    <script>
+        //const arrs = [10, 8, 23, 76, 7, 67, 2, 103, 14, 30, 45, 8, 93, 22]
+        /*const arrs = []
+        for(let i = 0; i < 10; i++) {
+            arrs.push(Math.ceil(Math.random() * 1000))
+        }*/
+       /* console.log(arrs)*/
+    </script>
+    <script>
+        //1. 冒泡排序
+        var arrs = [10, 8, 23, 76, 7, 67, 2, 103, 14, 30, 45, 8, 93, 22]
+        console.time('Array Sort')
+        function bubbleSort(arr) {
+            const len = arr.length;
+            for(let i = 0; i < len - 1; i++) {
+                for(let j = 0; j < len - 1 - i; j++) {
+                    if(arr[j] > arr[j+1]) {
+                        let t = arr[j]
+                        arr[j] = arr[j+1]
+                        arr[j+1] = t
+                    }
+                }
+            }
+            console.log(arr)
+        }
+        bubbleSort(arrs)
+        console.timeEnd('Array Sort')
+    </script>
+    <script>
+        //2. 选择排序
+        var arrs = [10, 8, 23, 76, 7, 67, 2, 103, 14, 30, 45, 8, 93, 22]
+        console.time('Array Sort')
+        function selectionSort(arr) {
+            const len = arr.length
+            let minIndex, t
+            for(let i = 0; i < len - 1; i++) {
+                minIndex = i 
+                for(let j = i + 1; j < len; j++) {
+                    if(arr[j] < arr[minIndex]) {
+                        minIndex = j
+                    }
+                }
+                t = arr[i]
+                arr[i] = arr[minIndex]
+                arr[minIndex] = t
+            }
+            console.log(arr)
+        }
+        selectionSort(arrs)
+        console.timeEnd('Array Sort')
+    </script>
+    <script>
+        //3. 插入排序
+        var arrs = [10, 8, 23, 76, 7, 67, 2, 103, 14, 30, 45, 8, 93, 22]
+        console.time('Array Sort')
+        function insertionSort(arr) {
+            const len = arr.length 
+            let preIndex, current 
+            for(let i = 1; i < len; i++) {
+                preIndex = i - 1
+                current = arr[i]
+                while(preIndex >= 0 && arr[preIndex] > current) {
+                    arr[preIndex + 1] = arr[preIndex]
+                    preIndex--
+                }
+                arr[preIndex + 1] = current
+            }
+            console.log(arr)
+        }
+        insertionSort(arrs)
+        console.timeEnd('Array Sort')
+    </script>
+    <script>
+        //4. 希尔排序
+        var arrs = [10, 8, 23, 76, 7, 67, 2, 103, 14, 30, 45, 8, 93, 22]
+        console.time('Array Sort')
+        function sellSort(arr) {
+            /*const len = arr.length */
+            let t, gap = 1
+            while(gap < arr.length /3) {  //动态定义间隔序列
+                gap = gap * 3 + 1
+            } 
+            for(gap; gap > 0; gap = Math.floor(gap/3)) {
+                for(let i = gap; i < arr.length ; i++) {
+                    t = arr[i]
+                    let j
+                    for(j = i - gap; j > 0 && arr[j] > t; j-=gap) {
+                        arr[j + gap] = arr[j]
+                    }
+                    arr[j + gap] = t
+                }
+            }
+            /*console.log(arr)*/
+            return arr
+        }
+        var result = sellSort(arrs)
+        console.log(result)
+        console.timeEnd('Array Sort')
+    </script>
+    <script>
+        //5. 归并排序
+        var arrs = [10, 8, 23, 76, 7, 67, 2, 103, 14, 30, 45, 8, 93, 22]
+        console.time('Array Sort')
+        //采用自上而下的递归方法
+        function mergeSort(arr) {
+            const len = arr.length
+            if(len < 2) {
+                return arr
+            }
+            const middle = Math.floor(len / 2)
+                  left = arr.slice(0, middle)
+                  right = arr.slice(middle)
+                /*  console.log(left, right)*/
+            return merge(mergeSort(left), mergeSort(right))
+            
+        }
+        function merge(left, right) {
+            const result = []
+            while(left.length > 0 && right.length > 0) {
+                if(left[0] <= right[0]) {
+                    result.push(left.shift())
+                } else {
+                    result.push(right.shift())
+                }
+            }
+            while(left.length) {
+                result.push(left.shift())
+            }
+            while(right.length) {
+                result.push(right.shift())
+            }
+            return result
+        }
+        var result = mergeSort(arrs)
+        console.log(result)
+        console.timeEnd('Array Sort')
+    </script>
+    <script>
+        // 6. 快速排序
+         var arrs = [10, 8, 23, 76, 7, 67, 2, 103, 14, 30, 45, 8, 93, 22]
+        console.time('Array Sort')
+        var quickSort = function(arr) {
+        　　if (arr.length <= 1) { 
+                return arr 
+            }
+        　　var pivotIndex = Math.floor(arr.length / 2)
+        　　var pivot = arr.splice(pivotIndex, 1)[0]
+        　　var left = []
+        　　var right = []
+        　　for (var i = 0; i < arr.length; i++){
+        　　　　if (arr[i] < pivot) {
+        　　　　　　left.push(arr[i])
+        　　　　} else {
+        　　　　　　right.push(arr[i])
+        　　　　}
+        　　}
+        　　return quickSort(left).concat([pivot], quickSort(right));
+        }
+        var result = quickSort(arrs)
+        console.log(result)
+        console.timeEnd('Array Sort')
+    </script>
+    <script>
+        //7. 
+        var arrs = [10, 8, 23, 76, 7, 67, 2, 103, 14, 30, 45, 8, 93, 22]
+        console.time('Array Sort')
+        /*console.log(arrs)*/
+        console.timeEnd('Array Sort')
+    </script>
+    <script>
+        //
+        var arrs = [10, 8, 23, 76, 7, 67, 2, 103, 14, 30, 45, 8, 93, 22]
+        console.time('Array Sort')
+       /* console.log(arrs)*/
+        console.timeEnd('Array Sort')
+    </script>
+    <script>
+        //
+        var arrs = [10, 8, 23, 76, 7, 67, 2, 103, 14, 30, 45, 8, 93, 22]
+        console.time('Array Sort')
+      /*  console.log(arrs)*/
+        console.timeEnd('Array Sort')
+    </script>
+    <script>
+        //
+        var arrs = [10, 8, 23, 76, 7, 67, 2, 103, 14, 30, 45, 8, 93, 22]
+        console.time('Array Sort')
+      /*  console.log(arrs)*/
+        console.timeEnd('Array Sort')
+    </script>
 </body>
 </html>

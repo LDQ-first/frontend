@@ -22,7 +22,202 @@
 
 
 
-### Mongoose
+## Mongoose
+
+连接数据库和Express
+
+使用promise的调用方式
+
+
+```
+
+const mongoose = require('mongoose')
+const Schema =  mongoose.Schema
+mongoose.Promise = global.Promise
+
+const productSchema = new Schema({
+    "productId": String,
+    "productName": String,
+    "salePrice": Number,
+    "productImage": String,
+    "checked": Number,
+    "productNum": Number
+})
+
+
+module.exports = mongoose.model('Good', productSchema)
+
+
+```
+
+
+### Api
+
+```
+    插入数据
+    save
+
+    更新数据
+    update
+
+    查找
+    find
+
+    查找并更新
+    findByIdAndUpdate
+
+    移除
+    remove
+
+    数量查询
+    count
+
+    根据_id查询
+    findById
+
+
+```
+
+### 变量 
+
+```
+　 $or　　　　或关系
+
+　　$nor　　　 或关系取反
+
+　　$gt　　　　大于
+
+　　$gte　　　 大于等于
+
+　　$lt　　　　 小于
+
+　　$lte　　　  小于等于
+
+　　$ne            不等于
+
+　　$in             在多个值范围内
+
+　　$nin           不在多个值范围内
+
+　　$all            匹配数组中多个值
+
+　　$regex　　正则，用于模糊查询
+
+　　$size　　　匹配数组大小
+
+　　$maxDistance　　范围查询，距离（基于LBS）
+
+　　$mod　　   取模运算
+
+　　$near　　　邻域查询，查询附近的位置（基于LBS）
+
+　　$exists　　  字段是否存在
+
+　　$elemMatch　　匹配内数组内的元素
+
+　　$within　　范围查询（基于LBS）
+
+　　$box　　　 范围查询，矩形范围（基于LBS）
+
+　　$center       范围醒询，圆形范围（基于LBS）
+
+　　$centerSphere　　范围查询，球形范围（基于LBS）
+
+　　$slice　　　　查询字段集合中的元素（比如从第几个之后，第N到第M个元素）
+```
+
+
+
+### 使用
+
+```
+const Goods = require('../models/goods.js')
+mongoose.Promise = global.Promise
+
+var env = process.env.NODE_ENV || 'development'
+if(env === 'development') {
+    console.log('NODE_ENV: ', env)
+    mongoose.connect('mongodb://IP:port/shopdb')
+}
+else {
+  console.log('NODE_ENV: ', env)
+  mongoose.connect('mongodb://用户.数据库:password@IP:port/shopdb')
+}
+
+
+
+router.get('/list', (req, res, next) => {
+   const sort = req.query.sort
+   const page = req.query.page
+   const pageSize = req.query.pageSize
+   const priceChecked = req.query.priceChecked
+   let params = {}
+   let priceGt = '', priceLte = ''
+   if(priceChecked !== 'all') {
+       switch(priceChecked) {
+            case '0': priceGt = 0; priceLte=500; break;
+            case '1': priceGt = 500; priceLte=1000; break;
+            case '2': priceGt = 1000; priceLte=2000; break;
+            case '3': priceGt = 2000; priceLte=4000; break;
+        }
+        params = {
+            salePrice: {
+                $gt: priceGt,
+                $lte: priceLte
+            }
+        }
+        console.log(params)
+   }
+   
+   const skip = (page - 1) * pageSize;
+   const goodsModel = Goods.find(params).skip(skip).limit(parseInt(pageSize))
+
+   goodsModel.sort({'salePrice': sort})
+
+   goodsModel.exec((err, doc) => {
+       if(err) {
+           res.json({
+               status: '404',
+               msg: err.message
+           })
+       }
+       else {
+           res.json({
+               status: '200',
+               msg: 'OK',
+               result: {
+                   count: doc.length,
+                   list: doc
+               }
+           })
+       }
+   })
+})
+
+
+```
+
+
+### 根据环境连接数据库
+
+```
+var env = process.env.NODE_ENV || 'development'
+var sessionUrl = ''
+if(env === 'development') {
+    console.log('app.NODE_ENV: ', env)
+    sessionUrl = 'mongodb://IP:port/shopdb'
+}
+else {
+  console.log('app.NODE_ENV: ', env)
+  sessionUrl = 'mongodb://用户.数据库:password@IP:port/shopdb'
+}
+
+```
+
+
+
+
+
 
 
 

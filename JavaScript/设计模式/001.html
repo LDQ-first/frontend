@@ -20,20 +20,135 @@
 ## 设计模式
 
 
+### 单例模式
+
+
+单例模式，是一种常用的软件设计模式。
+在它的核心结构中只包含一个被称为单例的特殊类。
+通过单例模式可以保证系统中一个类只有一个实例。
+即一个类只有一个对象实例
+
+
+```
+const people = (() => {
+    let = instance
+    const init = () => {
+        return {
+
+        }
+    }
+    return {
+        createPeople: () => {
+            if(!instance) {
+                instance = init()
+            }
+            return instance 
+        }
+    }
+})()
+
+const obj1 = people.createPeople()
+const obj2 = people.createPeople()
 
 
 
 
 
+```
+
+
+### 发布订阅模式
+
+
+
+```
+const EventCenter = (() => {
+    let events = {}
+    const on = (evt, handler) => {
+        events[evt] = events[evt] || []
+        events[evt].push({
+            handler: handler
+        })
+    }
+    const fire = (evt, args) => {
+        if(!events[evt]) {
+            return
+        }
+        for(let i = 0; i < events[evt].length; i++ ) {
+            events[evt][i].handler(args)
+        }
+    }
+
+    return {
+        on: on,
+        fire: fire
+    }
+
+})()
+
+EventCenter.on("my_event", (data) => {
+    console.log('my_event received!')
+})
+
+EventCenter.on("my_event", function(data){
+    console.log('my_event2 received!');
+})
+
+EventCenter.fire('my_event')
+
+EventCenter.on("my_event", function(data){
+    console.log('my_event3 received!');
+})
+
+
+
+```
+
+
+
+### 构造函数模式
 
 
 
 
+```
+function Person(name, age){
+        this.name = name;
+        this.age = age;
+    }
+    Person.prototype.sayName = function(){
+        return this.name;
+    };
+    var student = new Person("ldq", 20);
+    var teacher = new Person("kkx", 30);
+    console.log(student);
+    console.log(teacher);
+```
 
 
 
+### 工厂模式
 
 
+```
+ var createPerson = function (opts){
+        var person = {
+            name: opts.name || 'ldq'
+        };
+        person.sayName = function(){
+            document.write("My name is " + this.name + "<br>");
+        }
+        return person;
+    }
+    var p1 = createPerson({
+        name: "arry"
+    });
+    var p2 = createPerson({
+        name: "xpp"
+    });
+    p1.sayName();
+    p2.sayName();
+```
 
 
 

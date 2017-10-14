@@ -20,7 +20,70 @@
 ## Nginx
 
 
+### 代理转发
 
+
+
+```
+upstream vue {
+    server 本地IP:port;
+}
+
+server {
+    listen port;
+    # server_name *.主域名;
+    server_name  外部IP;
+    location / {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Nginx-Proxy true;
+        proxy_pass http://vue;
+        proxy_redirect off;
+    }
+    location /goods/ {
+        proxy_pass http://本地IP:port/goods/;
+    }
+
+    location /users/ {
+        proxy_pass http://本地IP:port/users/;
+    }
+    location /vueshop/ {
+        alias 路径;
+    }
+    location ~* ^.+\.(jpg|jpeg|gif|png|svg|ico|webp|css|js|map|pdf|txt)$ {
+        root 路径;
+    }
+}
+
+
+```
+
+
+### 开启gzip压缩
+
+
+sudo vi /etc/nginx/nginx.conf
+
+```
+##
+# Gzip Settings
+##
+
+gzip on;
+gzip_disable "msie6";
+# 启用gzip压缩的最小文件，小于设置值的文件将不会压缩
+gzip_min_length 1k;
+# 是否在http header中添加Vary: Accept-Encoding，建议开启
+    gzip_vary on;
+# gzip_proxied any;
+# gzip 压缩级别，1-10，数字越大压缩的越好，也越占用CPU时间
+    gzip_comp_level 4;
+    gzip_buffers 16 8k;
+# gzip_http_version 1.1;
+    gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+```
 
 
 

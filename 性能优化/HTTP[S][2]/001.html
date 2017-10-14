@@ -92,6 +92,11 @@ UTC时间
 
 与 catch-control 共用
 
+注意：如果响应头中有 Last-modified 而没有 Expire 或 Cache-Control 时，
+浏览器会有自己的算法来推算出一个时间缓存该文件多久，
+不同浏览器得出的时间不一样，
+所以 Last-modified 要记得配合 Expires/Cache-Control 使用。
+
 
 
 Etag
@@ -380,6 +385,7 @@ TCP连接不关闭  keep-alive
 
 
 服务端推送
+
 
 
 

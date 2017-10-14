@@ -226,7 +226,19 @@ lists.appendChild(frag)
 
 ```
 
-
+Array.prototype.unique = function(){
+    var res = []
+    var json = {}
+    for(var i = 0; i < this.length; i++){
+        if(!json[this[i]]){
+            res.push(this[i])
+            json[this[i]] = 1
+        }
+    }
+        return res
+}
+var arr = [112,112,34, null, undefined, false, false, '你好',112,112,34,'你好','str','str1']
+console.log(arr.unique())
 
 ```
 
@@ -237,13 +249,62 @@ lists.appendChild(frag)
 ```
 
 
+
+
 ```
 
 
-### 深拷贝
+### 浅拷贝，深拷贝
 
 ```
 
+var obj = { a:1, arr: [2,3] };
+var shallowObj = shallowCopy(obj)
+
+function shallowCopy(src) {
+  var dst = {}
+  for (var prop in src) {
+    if (src.hasOwnProperty(prop)) {
+      dst[prop] = src[prop]
+    }
+  }
+  return dst
+}
+
+
+
+JSON.parse( JSON.stringify(a) )
+
+
+不过这有局限性：
+
+无法复制函数
+原型链没了，对象就是object，所属的类没了。
+但是他简单呀，大多时候完全可以满足需求了
+
+
+
+jQuery.extend(true, { a : { a : "a" } }, { a : { b : "b" } } )
+
+
+function deepCopy(p, c) {  
+    var c = c || {}
+    for (var i in p) {  
+        if(! p.hasOwnProperty(i)){  
+            continue  
+        }  
+        if (typeof p[i] === 'object') {  
+            c[i] = (p[i].constructor === Array) ? [] : {};  
+            deepCopy(p[i], c[i]);  
+        } else {  
+            c[i] = p[i] 
+        }  
+    }  
+    return c  
+}  
+  
+Parent = {name: 'foo', birthPlaces: ['北京','上海','香港']}  
+var Child = deepCopy(Parent)
 
 
 

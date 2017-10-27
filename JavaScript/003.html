@@ -232,7 +232,7 @@ Array.prototype.unique = function(){
     for(var i = 0; i < this.length; i++){
         if(!json[this[i]]){
             res.push(this[i])
-            json[this[i]] = 1
+            json[this[i]] = true
         }
     }
         return res
@@ -287,15 +287,15 @@ JSON.parse( JSON.stringify(a) )
 jQuery.extend(true, { a : { a : "a" } }, { a : { b : "b" } } )
 
 
-function deepCopy(p, c) {  
-    var c = c || {}
-    for (var i in p) {  
+function deepCopy(p, child) {  
+    const c = child || {}
+    for (let i in p) {  
         if(! p.hasOwnProperty(i)){  
             continue  
         }  
         if (typeof p[i] === 'object') {  
-            c[i] = (p[i].constructor === Array) ? [] : {};  
-            deepCopy(p[i], c[i]);  
+            c[i] = (p[i] instanceof Array) ? [] : {}
+            deepCopy(p[i], c[i])
         } else {  
             c[i] = p[i] 
         }  
@@ -304,8 +304,8 @@ function deepCopy(p, c) {
 }  
   
 Parent = {name: 'foo', birthPlaces: ['北京','上海','香港']}  
-var Child = deepCopy(Parent)
-
+const Child = deepCopy(Parent)
+console.log(Child)
 
 
 ```

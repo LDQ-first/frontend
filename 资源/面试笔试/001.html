@@ -468,33 +468,33 @@ DNS lookup（缓存）
 <script>
    /* 5. 有一个全局变量 a，有一个全局函数 b，
    实现一个方法bindData，执行后，a的任何赋值都会触发b的执行。*/
-    const obj = {
-        a: 1
+     const obj = {
+        a: 1,
+		c: 3
     }
-    function b(){
+    function b(key){
         console.log(this)
-        console.log('a的值发生改变')
-        console.log('a的值为: ', this.a)
+        console.log(`${key}的值发生改变`)
+        console.log(`${key}的值为: `, this[key])
     }
     bindData(obj, b)
-    obj.a = 2; // 此时输出 a的值发生改变
+    obj.a = 2// 此时输出 a的值发生改变
+	obj.c = 4
     function bindData (target, event) {
        for(let key in target) {
            if(target.hasOwnProperty(key)) {
-               (function() {
-                   let value = target[key]
-                   Object.defineProperty(target, key, {
-                       get: function ()  {
-                           return value
-                       },
-                       set: function (_value) {
-                           value = _value
-                            /*event()*/
-                           /*console.log(this)*/
-                           event.call(this)
-                       }
-                   })
-               })()
+               let value = target[key]
+               Object.defineProperty(target, key, {
+                   get: function ()  {
+                       return value
+                   },
+                   set: function (_value) {
+                       value = _value
+                        /*event()*/
+                       /*console.log(this)*/
+                       event.call(this, key)
+                   }
+               })
            }
        }
     }

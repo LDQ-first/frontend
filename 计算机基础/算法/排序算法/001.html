@@ -76,19 +76,25 @@
         var arrs = [10, 8, 23, 76, 7, 67, 2, 103, 14, 30, 45, 8, 93, 22]
         console.time('Array Sort')
         function bubbleSort(arr) {
-            const len = arr.length;
+            const len = arr.length
+            let t, flag = true
             for(let i = 0; i < len - 1; i++) {
+                if(!flag) return arr
+                flag = false
                 for(let j = 0; j < len - 1 - i; j++) {
                     if(arr[j] > arr[j+1]) {
-                        let t = arr[j]
+                        t = arr[j]
                         arr[j] = arr[j+1]
                         arr[j+1] = t
+                        flag = true
                     }
                 }
             }
-            console.log(arr)
+            /*console.log(arr)*/
+            return arr
         }
-        bubbleSort(arrs)
+        let res = bubbleSort(arrs)
+        console.log(res)
         console.timeEnd('Array Sort')
     </script>
     <script>
@@ -142,10 +148,10 @@
         function sellSort(arr) {
             /*const len = arr.length */
             let t, gap = 1
-            while(gap < arr.length /3) {  //动态定义间隔序列
-                gap = gap * 3 + 1
+            while(gap < arr.length /5) {  //动态定义间隔序列
+                gap = gap * 5 + 1
             } 
-            for(gap; gap > 0; gap = Math.floor(gap/3)) {
+            for(gap; gap > 0; gap = Math.floor(gap/5)) {
                 for(let i = gap; i < arr.length ; i++) {
                     t = arr[i]
                     let j
@@ -172,8 +178,8 @@
             if(len < 2) {
                 return arr
             }
-            const middle = Math.floor(len / 2)
-                  left = arr.slice(0, middle)
+            const middle = Math.floor(len / 2),
+                  left = arr.slice(0, middle),
                   right = arr.slice(middle)
                 /*  console.log(left, right)*/
             return merge(mergeSort(left), mergeSort(right))
@@ -208,11 +214,11 @@
         　　if (arr.length <= 1) { 
                 return arr 
             }
-        　　var pivotIndex = Math.floor(arr.length / 2)
-        　　var pivot = arr.splice(pivotIndex, 1)[0]
-        　　var left = []
-        　　var right = []
-        　　for (var i = 0; i < arr.length; i++){
+        　　const pivotIndex = Math.floor(arr.length / 2)
+        　　let pivot = arr.splice(pivotIndex, 1)[0]
+        　　let left = []
+        　　let right = []
+        　　for (let i = 0; i < arr.length; i++){
         　　　　if (arr[i] < pivot) {
         　　　　　　left.push(arr[i])
         　　　　} else {
@@ -226,9 +232,25 @@
         console.timeEnd('Array Sort')
     </script>
     <script>
-        //7. 
+        //7. 计数排序
         var arrs = [10, 8, 23, 76, 7, 67, 2, 103, 14, 30, 45, 8, 93, 22]
         console.time('Array Sort')
+        function countingSort(arr) {
+           const len = arr.length,
+        　　B = [],
+        　　C = []
+        　　for (let i = 0; i < len; i++) {
+        　　　　C[arr[i]] = C[arr[i]] ? C[arr[i]] + 1 : 1
+        　　}
+        　　for (let j = 0; j < C.length ; j++) {
+                const length = C[j]
+        　　　　for(let k = 0 ; k <length ; k++){
+        　　　　　　B.push(j)
+        　　　　}
+        　　}
+        　　return B
+        }
+        console.log(countingSort(arrs));
         /*console.log(arrs)*/
         console.timeEnd('Array Sort')
     </script>

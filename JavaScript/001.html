@@ -378,6 +378,9 @@ while(i!=1){
 
 由父节点的监听函数统一处理多个子元素的事件
 
+event.target          返回触发事件的元素
+event.currentTarget   返回绑定事件的元素
+
 var ul = document.querySelector('ul');
 
 ul.addEventListener('click', function(event) {
@@ -1403,7 +1406,7 @@ task1
 
 fn(1,2,3) => fn(1)(2)(3)
 
-
+const f = (a) => (b) => (c) => a + b + c 
 
 
 ```

@@ -106,6 +106,15 @@ https://xxxx.com/gift?giftId=aabbcc&_csrf_token=xxxxx
 后台还是很好计算的）
 
 
+Token被用户端放在Cookie中（不设置HttpOnly），
+同源页面每次发请求都在请求头或者参数中加入Cookie中读取的Token来完成验证。
+CSRF只能通过浏览器自己带上Cookie，
+不能操作Cookie来获取到Token并加到http请求的参数中。
+
+所以CSRF本质原因是“重要操作的所有参数都是可以被攻击者猜测到的”，Token加密后通过Cookie储存，
+只有同源页面可以读取，把Token作为重要操作的参数，
+CSRF无法获取Token放在参数中，也无法仿造出正确的Token，就被防止掉了
+
 
 
 
